@@ -3,7 +3,6 @@ import { Message } from "../message/Message.jsx";
 import "./messageListStyle.sass";
 
 export function MessageList(props) {
-  console.log(props.messagesList);
   return (
     <div className="messageListDiv">
       {props.messagesList.map((item, index) => 
