@@ -8,10 +8,12 @@ export function App() {
     { name: "Федор", content: "Как дела?" },
   ];
   const [messageState, setMessages] = useState(messages);
-  console.log("messageState", messageState);
+
+  console.log("messageState", messageState); //а почему эта строчка выполняется при
+  //каждом изменении messageState?
+
   function handlePush(message) {
     setMessages([...messageState, message]);
-    //return messages;
   }
   return (
     <div>
