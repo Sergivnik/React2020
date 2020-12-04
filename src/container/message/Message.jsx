@@ -1,12 +1,13 @@
+// Message.jsx
 import React from "react";
 import "./messageStyle.sass";
 
-export function Message(props) {
+export function Message({ userMessage: { name, content } }) {
   return (
     <div className="messageDiv">
       <p className="messageP">
-        <strong>{props.userMessage.name}: </strong>
-        {props.userMessage.content}
+        <strong>{name}: </strong>
+        {content}
       </p>
     </div>
   );

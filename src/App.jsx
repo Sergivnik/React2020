@@ -1,20 +1,21 @@
-import React, { useState } from "react";
+// App.jsx
+import React, { useCallback, useState } from "react";
 import { MessageList } from "./container/messageList/MessageList.jsx";
 import { ButtonPushMe } from "./container/buttonPushMe/BattonPushMe.jsx";
 
+const messages = [
+  { name: "Федор", content: "Привет" },
+  { name: "Федор", content: "Как дела?" },
+];
+
 export function App() {
-  let messages = [
-    { name: "Федор", content: "Привет" },
-    { name: "Федор", content: "Как дела?" },
-  ];
   const [messageState, setMessages] = useState(messages);
 
-  console.log("messageState", messageState); //а почему эта строчка выполняется при
-  //каждом изменении messageState?
+  const handlePush = useCallback(
+    (message) => setMessages([...messageState, message]),
+    [messageState]
+  );
 
-  function handlePush(message) {
-    setMessages([...messageState, message]);
-  }
   return (
     <div>
       <ButtonPushMe getPush={handlePush} />
