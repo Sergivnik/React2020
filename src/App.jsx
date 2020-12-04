@@ -10,7 +10,7 @@ const messages = [
 
 export function App() {
   const [messageState, setMessages] = useState(messages);
-
+  debugger;
   const handlePush = useCallback(
     (message) => setMessages([...messageState, message]),
     [messageState]
