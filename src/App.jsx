@@ -18,13 +18,17 @@ export function App() {
   );
 
   useEffect(() => {
+    // Как-то странно перерендеривается, если отправить несколько сообщений подряд за 3 сек
     setTimeout(() => {
       const lastMessage = messageState[messageState.length - 1];
       if (lastMessage.name != ROBOT) {
-        handlePush({
-          name: ROBOT,
-          content: `Hello ${lastMessage.name}, I'm Robot`,
-        });
+        setMessages([
+          ...messageState,
+          {
+            name: ROBOT,
+            content: `Hello ${lastMessage.name}, I'm Robot`,
+          },
+        ]);
       }
     }, 3000);
   }, [messageState]);

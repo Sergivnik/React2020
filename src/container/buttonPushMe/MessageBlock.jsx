@@ -15,12 +15,17 @@ export function MessageBlock({ getPush }) {
     setText("", [text]);
     getPush({ name: "Федор", content: text });
   }, [text]);
-  
+
   return (
-    <div>
-      <input onChange={getText} type="text" value={text} />
+    <div className="messageBlock">
+      <input
+        className="textfield"
+        onChange={getText}
+        type="text"
+        value={text}
+      />
       <button className="buttonPushMe" onClick={onPushMe}>
-        PushMe
+        Отправить
       </button>
     </div>
   );
