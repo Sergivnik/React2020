@@ -1,25 +1,38 @@
 // App.jsx
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { MessageList } from "./container/messageList/MessageList.jsx";
-import { ButtonPushMe } from "./container/buttonPushMe/BattonPushMe.jsx";
+import { MessageBlock } from "./container/buttonPushMe/MessageBlock.jsx";
 
+const ROBOT = "Robot";
 const messages = [
-  { name: "Федор", content: "Привет" },
-  { name: "Федор", content: "Как дела?" },
+  { name: ROBOT, content: "Привет" },
+  { name: ROBOT, content: "Как дела?" },
 ];
 
 export function App() {
   const [messageState, setMessages] = useState(messages);
-  debugger;
+
   const handlePush = useCallback(
     (message) => setMessages([...messageState, message]),
     [messageState]
   );
 
+  useEffect(() => {
+    setTimeout(() => {
+      const lastMessage = messageState[messageState.length - 1];
+      if (lastMessage.name != ROBOT) {
+        handlePush({
+          name: ROBOT,
+          content: `Hello ${lastMessage.name}, I'm Robot`,
+        });
+      }
+    }, 3000);
+  }, [messageState]);
+
   return (
     <div>
-      <ButtonPushMe getPush={handlePush} />
       <MessageList messagesList={messageState} />
+      <MessageBlock getPush={handlePush} />
     </div>
   );
 }
