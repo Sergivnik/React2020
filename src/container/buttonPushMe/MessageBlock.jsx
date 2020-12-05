@@ -16,11 +16,22 @@ export function MessageBlock({ getPush }) {
     getPush({ name: "Федор", content: text });
   }, [text]);
 
+  const handleKeyUp = useCallback(
+    (event) => {
+      if (event.keyCode == 13) {
+        setText("", [text]);
+        getPush({ name: "Федор", content: text });
+      }
+    },
+    [text]
+  );
+
   return (
     <div className="messageBlock">
       <input
         className="textfield"
         onChange={getText}
+        onKeyUp={handleKeyUp}
         type="text"
         value={text}
       />
