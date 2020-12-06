@@ -37,7 +37,6 @@ export function App() {
     const lastMessage = messageState[messageState.length - 1];
     if (check && lastMessage.name != ROBOT) {
       setCheck(false);
-      //console.log("useEffect", messageState);
       timerID = setTimeout(() => {
         console.log("setTimeout", messageState);
         // Вот почему тут messageState 3-х секундной давности
@@ -45,7 +44,6 @@ export function App() {
           name: ROBOT,
           content: `Hello ${lastMessage.name}, I'm Robot`,
         });
-        //console.log("setCheck", messageState);
         setCheck(true);
       }, 3000);
     }
@@ -55,8 +53,10 @@ export function App() {
     <div className="layer">
       <Header />
       <ChatList />
-      <MessageList messagesList={messageState} />
-      <MessageBlock getPush={handlePush} />
+      <div className="messageListBlock">
+        <MessageList messagesList={messageState} getPush={handlePush} />
+        <MessageBlock getPush={handlePush} />
+      </div>
     </div>
   );
 }
