@@ -2,6 +2,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { MessageList } from "./container/messageList/MessageList.jsx";
 import { MessageBlock } from "./container/buttonPushMe/MessageBlock.jsx";
+import { Header } from "./container/header/Header.jsx";
+import { ChatList } from "./container/chatList/chatList.jsx";
+import "./appStyle.sass";
 
 const ROBOT = "Robot";
 const messages = [
@@ -14,7 +17,10 @@ export function App() {
   const [messageState, setMessages] = useState(messages);
   const [check, setCheck] = useState(true);
   const handlePush = useCallback(
-    (message) => setMessages([...messageState, message]),
+    (message) => {
+      console.log("handlePush", messageState);
+      setMessages([...messageState, message]);
+    },
     [messageState]
   );
 
@@ -24,27 +30,31 @@ export function App() {
     // кстати и в итоге могут данные пропадать. Если неостанавливаясь вводить
     // 1 enter 2 enter 3 enter 4 enter 5 enter и т.д.
     // Уже не пропадают т.к. убрал лишние useCallback в MessageBlock
+    // не-е все таки пропадают
 
-    clearTimeout(timerID);
+    // clearTimeout(timerID);
     // clearTimeout вроде решает проблему, но может есть другие способы
     const lastMessage = messageState[messageState.length - 1];
     if (check && lastMessage.name != ROBOT) {
-      //setCheck(false);
+      setCheck(false);
+      //console.log("useEffect", messageState);
       timerID = setTimeout(() => {
-        setMessages([
-          ...messageState,
-          {
-            name: ROBOT,
-            content: `Hello ${lastMessage.name}, I'm Robot`,
-          },
-        ]);
-        //setCheck(true);
+        console.log("setTimeout", messageState);
+        // Вот почему тут messageState 3-х секундной давности
+        handlePush({
+          name: ROBOT,
+          content: `Hello ${lastMessage.name}, I'm Robot`,
+        });
+        //console.log("setCheck", messageState);
+        setCheck(true);
       }, 3000);
     }
   }, [messageState]);
 
   return (
-    <div>
+    <div className="layer">
+      <Header />
+      <ChatList />
       <MessageList messagesList={messageState} />
       <MessageBlock getPush={handlePush} />
     </div>
