@@ -26,7 +26,7 @@ export function App() {
     // Уже не пропадают т.к. убрал лишние useCallback в MessageBlock
 
     clearTimeout(timerID);
-    // без clearTimeout рендерится очень странно
+    // clearTimeout вроде решает проблему, но может есть другие способы
     const lastMessage = messageState[messageState.length - 1];
     if (check && lastMessage.name != ROBOT) {
       //setCheck(false);
