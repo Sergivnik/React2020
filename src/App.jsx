@@ -12,7 +12,7 @@ let timerID;
 
 export function App() {
   const [messageState, setMessages] = useState(messages);
-
+  const [check, setCheck] = useState(true);
   const handlePush = useCallback(
     (message) => setMessages([...messageState, message]),
     [messageState]
@@ -23,10 +23,13 @@ export function App() {
     // за 3 сек. В итоге все нормально, но в процессе React наверное с ума сходит))
     // кстати и в итоге могут данные пропадать. Если неостанавливаясь вводить
     // 1 enter 2 enter 3 enter 4 enter 5 enter и т.д.
+    // Уже не пропадают т.к. убрал лишние useCallback в MessageBlock
+
     clearTimeout(timerID);
-    timerID = setTimeout(() => {
-      const lastMessage = messageState[messageState.length - 1];
-      if (lastMessage.name != ROBOT) {
+    const lastMessage = messageState[messageState.length - 1];
+    if (check && lastMessage.name != ROBOT) {
+      //setCheck(false);
+      timerID = setTimeout(() => {
         setMessages([
           ...messageState,
           {
@@ -34,8 +37,9 @@ export function App() {
             content: `Hello ${lastMessage.name}, I'm Robot`,
           },
         ]);
-      }
-    }, 3000);
+        //setCheck(true);
+      }, 3000);
+    }
   }, [messageState]);
 
   return (
