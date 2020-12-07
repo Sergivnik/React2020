@@ -3,13 +3,14 @@ import React, { useCallback, useEffect, useState } from "react";
 import { MessageList } from "./container/messageList/MessageList.jsx";
 import { MessageBlock } from "./container/buttonPushMe/MessageBlock.jsx";
 
-const ROBOT = "Robot";
+
 const messages = [
   { name: ROBOT, content: "Привет" },
   { name: ROBOT, content: "Как дела?" },
 ];
 let timerID;
 
+export const ROBOT = "Robot";
 export function App() {
   const [messageState, setMessages] = useState(messages);
   const handlePush = useCallback(
@@ -24,7 +25,7 @@ export function App() {
     // 1 enter 2 enter 3 enter 4 enter 5 enter и т.д.
     // Уже не пропадают т.к. убрал лишние useCallback в MessageBlock
 
-    // clearTimeout(timerID);
+    clearTimeout(timerID);
     // clearTimeout вроде решает проблему, но может есть другие способы
     const lastMessage = messageState[messageState.length - 1];
     if (lastMessage.name !== ROBOT) {
