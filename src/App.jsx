@@ -15,11 +15,16 @@ let timerID;
 
 export function App() {
   const [messageState, setMessages] = useState(messages);
-  const [check, setCheck] = useState(true);
+  const [check, setCheck] = useState(false);
   const handlePush = useCallback(
     (message) => {
       console.log("handlePush", messageState);
       setMessages([...messageState, message]);
+      if (message.name != ROBOT) {
+        setCheck(true);
+      } else {
+        setCheck(false);
+      }
     },
     [messageState]
   );
@@ -35,8 +40,7 @@ export function App() {
     // clearTimeout(timerID);
     // clearTimeout вроде решает проблему, но может есть другие способы
     const lastMessage = messageState[messageState.length - 1];
-    if (check && lastMessage.name != ROBOT) {
-      setCheck(false);
+    if (check) {
       timerID = setTimeout(() => {
         console.log("setTimeout", messageState);
         // Вот почему тут messageState 3-х секундной давности
@@ -44,10 +48,9 @@ export function App() {
           name: ROBOT,
           content: `Hello ${lastMessage.name}, I'm Robot`,
         });
-        setCheck(true);
       }, 3000);
     }
-  }, [messageState]);
+  }, [check]);
 
   return (
     <div className="layer">
