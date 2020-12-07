@@ -3,22 +3,22 @@ import "./messageBlock.sass";
 
 export function MessageBlock({ getPush }) {
   const [text, setText] = useState("");
-  const getText = (event) => setText(event.currentTarget.value, [text]);
+  const getText = (event) => setText(event.currentTarget.value);
 
-  const onPushMe = () => {
-    setText("", [text]);
+  const onSubmit = (event) => {
+    event.preventDefault();
+    setText("");
     getPush({ name: "Федор", content: text });
   };
 
   const handleKeyUp = (event) => {
     if (event.keyCode == 13) {
-      setText("", [text]);
-      getPush({ name: "Федор", content: text });
+      setText("");
     }
   };
 
   return (
-    <div className="messageBlock">
+    <form className="messageBlock">
       <input
         className="textfield"
         onChange={getText}
@@ -26,9 +26,9 @@ export function MessageBlock({ getPush }) {
         type="text"
         value={text}
       />
-      <button className="buttonPushMe" onClick={onPushMe}>
+      <button className="buttonPushMe" onClick={onSubmit}>
         Отправить
       </button>
-    </div>
+    </form>
   );
 }

@@ -12,7 +12,6 @@ let timerID;
 
 export function App() {
   const [messageState, setMessages] = useState(messages);
-  const [check, setCheck] = useState(true);
   const handlePush = useCallback(
     (message) => setMessages([...messageState, message]),
     [messageState]
@@ -25,11 +24,10 @@ export function App() {
     // 1 enter 2 enter 3 enter 4 enter 5 enter и т.д.
     // Уже не пропадают т.к. убрал лишние useCallback в MessageBlock
 
-    clearTimeout(timerID);
+    // clearTimeout(timerID);
     // clearTimeout вроде решает проблему, но может есть другие способы
     const lastMessage = messageState[messageState.length - 1];
-    if (check && lastMessage.name != ROBOT) {
-      //setCheck(false);
+    if (lastMessage.name !== ROBOT) {
       timerID = setTimeout(() => {
         setMessages([
           ...messageState,
@@ -41,6 +39,7 @@ export function App() {
         //setCheck(true);
       }, 3000);
     }
+    return () => clearTimeout(timerID);
   }, [messageState]);
 
   return (
