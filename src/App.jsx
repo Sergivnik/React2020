@@ -15,42 +15,45 @@ let timerID;
 
 export function App() {
   const [messageState, setMessages] = useState(messages);
-  const [check, setCheck] = useState(false);
+  const [unanswered, setUnanswered] = useState(0);
+  const [lastName, setLastName] = useState("");
+
   const handlePush = useCallback(
     (message) => {
       console.log("handlePush", messageState);
       setMessages([...messageState, message]);
-      if (message.name != ROBOT) {
-        setCheck(true);
-      } else {
-        setCheck(false);
-      }
     },
     [messageState]
   );
 
-  useEffect(() => {
-    // Как-то странно перерендеривается, если отправить несколько сообщений подряд
-    // за 3 сек. В итоге все нормально, но в процессе React наверное с ума сходит))
-    // кстати и в итоге могут данные пропадать. Если неостанавливаясь вводить
-    // 1 enter 2 enter 3 enter 4 enter 5 enter и т.д.
-    // Уже не пропадают т.к. убрал лишние useCallback в MessageBlock
-    // не-е все таки пропадают
+  const pushFromRobot = useCallback(() => {
+    handlePush({
+      name: ROBOT,
+      content: `Hello ${lastName}, I'm Robot`,
+    });
+  }, [handlePush, lastName]);
 
-    // clearTimeout(timerID);
-    // clearTimeout вроде решает проблему, но может есть другие способы
+  useEffect(() => {
     const lastMessage = messageState[messageState.length - 1];
-    if (check) {
+    {
       timerID = setTimeout(() => {
-        console.log("setTimeout", messageState);
-        // Вот почему тут messageState 3-х секундной давности
-        handlePush({
-          name: ROBOT,
-          content: `Hello ${lastMessage.name}, I'm Robot`,
-        });
+        if (lastMessage.name != ROBOT) {
+          console.log("setTimeout", messageState);
+          setLastName(lastMessage.name);
+          setUnanswered((unOld) => {
+            return unOld + 1;
+          });
+        }
       }, 3000);
     }
-  }, [check]);
+  }, [messageState, handlePush]);
+
+  useEffect(() => {
+    if (unanswered) {
+      pushFromRobot();
+      setUnanswered((unOld) => unOld - 1);
+    }
+  }, [unanswered, pushFromRobot]);
 
   return (
     <div className="layer">

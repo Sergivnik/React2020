@@ -1,10 +1,14 @@
-import React from "react";
+import React, { Component, useEffect } from "react";
 import { Message } from "../message/Message.jsx";
 import "./messageListStyle.sass";
 
 export function MessageList({ messagesList }) {
+  const myRef = React.createRef();
+  useEffect(() => {
+    myRef.current.scrollTop = myRef.current.scrollHeight;
+  });
   return (
-    <div className="messageListDiv">
+    <div ref={myRef} className="messageListDiv">
       {messagesList.map((item, index) => (
         <Message userMessage={item} key={index} />
       ))}
