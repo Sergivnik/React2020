@@ -8,59 +8,54 @@ import "./appStyle.sass";
 
 const ROBOT = "Robot";
 const messages = [
-  { name: ROBOT, content: "Привет" },
-  { name: ROBOT, content: "Как дела?" },
+  { name: ROBOT, content: "Привет", id: 1 },
+  { name: ROBOT, content: "Как дела?", id: 2 },
 ];
-let timerID;
 
 export function App() {
   const [messageState, setMessages] = useState(messages);
-  const [unanswered, setUnanswered] = useState(0);
-  const [lastName, setLastName] = useState("");
 
   const handlePush = useCallback(
     (message) => {
-      console.log("handlePush", messageState);
+      message.id = messageState[messageState.length - 1].id + 1;
+      console.log("handlePush", message);
       setMessages([...messageState, message]);
     },
     [messageState]
   );
 
-  const pushFromRobot = useCallback(() => {
-    handlePush({
-      name: ROBOT,
-      content: `Hello ${lastName}, I'm Robot`,
-    });
-  }, [handlePush, lastName]);
+  const handleDelMessage = (id) => {
+    let arr = [...messageState];
+    arr.splice(id-1, 1);
+    setMessages(arr);
+  };
 
   useEffect(() => {
     const lastMessage = messageState[messageState.length - 1];
+    let timerID;
     {
       timerID = setTimeout(() => {
         if (lastMessage.name != ROBOT) {
           console.log("setTimeout", messageState);
-          setLastName(lastMessage.name);
-          setUnanswered((unOld) => {
-            return unOld + 1;
+          handlePush({
+            name: ROBOT,
+            content: `Hello ${lastMessage.name}, I'm Robot`,
           });
         }
-      }, 3000);
+      }, 500);
+      return () => clearTimeout(timerID);
     }
-  }, [messageState, handlePush]);
-
-  useEffect(() => {
-    if (unanswered) {
-      pushFromRobot();
-      setUnanswered((unOld) => unOld - 1);
-    }
-  }, [unanswered, pushFromRobot]);
+  }, [messageState]);
 
   return (
     <div className="layer">
       <Header />
       <ChatList />
       <div className="messageListBlock">
-        <MessageList messagesList={messageState} getPush={handlePush} />
+        <MessageList
+          messagesList={messageState}
+          onDelMessage={handleDelMessage}
+        />
         <MessageBlock getPush={handlePush} />
       </div>
     </div>

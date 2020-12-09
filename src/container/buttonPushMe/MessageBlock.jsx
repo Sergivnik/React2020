@@ -26,7 +26,7 @@ export function MessageBlock({ getPush }) {
         type="text"
         value={text}
       />
-      <button className="buttonPushMe" onClick={onSubmit}>
+      <button className="buttonPushMe" type="submit" onClick={onSubmit}>
         Отправить
       </button>
     </form>
