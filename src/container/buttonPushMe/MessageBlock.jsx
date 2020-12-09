@@ -1,8 +1,10 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./messageBlock.sass";
 
-export function MessageBlock({ getPush }) {
-  const [text, setText] = useState("");
+export function MessageBlock({ qioteEnter, getPush }) {
+  const [text, setText] = useState(qioteEnter);
+  console.log(text);
+
   const getText = (event) => setText(event.currentTarget.value);
 
   const onSubmit = (event) => {
@@ -16,6 +18,10 @@ export function MessageBlock({ getPush }) {
       setText("");
     }
   };
+
+  useEffect(() => {
+    setText(qioteEnter);
+  }, [qioteEnter]);
 
   return (
     <form className="messageBlock">

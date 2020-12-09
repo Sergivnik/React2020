@@ -14,20 +14,28 @@ const messages = [
 
 export function App() {
   const [messageState, setMessages] = useState(messages);
+  const [Qiote, setQiote] = useState("");
 
   const handlePush = useCallback(
     (message) => {
       message.id = messageState[messageState.length - 1].id + 1;
-      console.log("handlePush", message);
       setMessages([...messageState, message]);
     },
     [messageState]
   );
 
-  const handleDelMessage = (id) => {
-    let arr = [...messageState];
-    arr.splice(id-1, 1);
-    setMessages(arr);
+  const handleDelMessage = (id, action, content) => {
+    if (action == "delete") {
+      let arr = [...messageState];
+      arr.splice(
+        arr.findIndex((item) => item.id === id),
+        1
+      );
+      setMessages(arr);
+    }
+    if (action == "qiote") {
+      setQiote(`Цитата: ${content}`);
+    }
   };
 
   useEffect(() => {
@@ -36,7 +44,6 @@ export function App() {
     {
       timerID = setTimeout(() => {
         if (lastMessage.name != ROBOT) {
-          console.log("setTimeout", messageState);
           handlePush({
             name: ROBOT,
             content: `Hello ${lastMessage.name}, I'm Robot`,
@@ -56,7 +63,7 @@ export function App() {
           messagesList={messageState}
           onDelMessage={handleDelMessage}
         />
-        <MessageBlock getPush={handlePush} />
+        <MessageBlock qioteEnter={Qiote} getPush={handlePush} />
       </div>
     </div>
   );

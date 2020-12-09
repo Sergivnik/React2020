@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Message } from "../message/Message.jsx";
 import "./messageListStyle.sass";
 
