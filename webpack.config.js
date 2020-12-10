@@ -4,7 +4,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
 
 module.exports = {
-  devtool: "source-map",
   entry: {
     main: path.resolve(__dirname, "./src/index.js"),
   },
@@ -21,6 +20,7 @@ module.exports = {
     hot: true,
     port: 8080,
   },
+  devtool: "source-map",
   plugins: [
     new HtmlWebpackPlugin({
       title: "webpack Boilerplate",
