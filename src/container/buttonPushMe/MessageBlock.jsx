@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./messageBlock.sass";
 
-export function MessageBlock({ qioteEnter, getPush }) {
-  const [text, setText] = useState(qioteEnter);
+export function MessageBlock({ qioteEnter, getPush, resetQiote }) {
+  const [text, setText] = useState("");
 
   const getText = (event) => setText(event.currentTarget.value);
 
@@ -10,11 +10,13 @@ export function MessageBlock({ qioteEnter, getPush }) {
     event.preventDefault();
     setText("");
     getPush({ name: "Федор", content: text });
+    resetQiote();
   };
 
   const handleKeyUp = (event) => {
     if (event.keyCode == 13) {
       setText("");
+      resetQiote();
     }
   };
 
