@@ -25,7 +25,7 @@ export function MessageBlock({ qioteEnter, getPush, resetQiote }) {
   }, [qioteEnter]);
 
   return (
-    <form className="messageBlock">
+    <form className="messageBlock" onSubmit={onSubmit}>
       <input
         className="textfield"
         onChange={getText}
@@ -33,7 +33,7 @@ export function MessageBlock({ qioteEnter, getPush, resetQiote }) {
         type="text"
         value={text}
       />
-      <button className="buttonPushMe" type="submit" onClick={onSubmit}>
+      <button className="buttonPushMe" type="submit">
         Отправить
       </button>
     </form>
