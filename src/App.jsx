@@ -24,26 +24,42 @@ export function App() {
     [messageState]
   );
 
-  const handleDelMessage = (id, action, content) => {
-    if (action == "delete") {
-      let arr = [...messageState];
-      arr.splice(
-        arr.findIndex((item) => item.id === id),
-        1
-      );
-      setMessages(arr);
-    }
-    if (action == "qiote") {
-      setQiote(`Цитата: ${content}`);
-    }
-    if (action == "edit") {
-      let text = "";
-      let arr = [...messageState];
-      text = prompt(`Редактирлвать сообщение ${content}`, content + text);
-      arr[arr.findIndex((item) => item.id === id)].content = text;
-      setMessages(arr);
-    }
-  };
+  // Пятое задание не сделал т.к. у меня такого бага не возникло (не иммитировать же)
+  // Сделал удаление, редактирование и цитирование
+
+  const handleChangeMessage = useCallback(
+    (id, action, content) => {
+      // И вот здесь нужен useCallback? console.log срабатывает одинаково. Как с useCallback так и без.
+      console.log("Ахтунг");
+      if (action == "delete") {
+        let arr = [...messageState];
+        //Почему нужен дополнительный массив. Почему нельзя как-нибудь так
+        // setMessages(
+        //   [...messageState].splice(
+        //     [...messageState].findIndex((item) => item.id === id)
+        //   ,1)
+        // );
+        // и он ведь не существует за пределами if ?
+        arr.splice(
+          arr.findIndex((item) => item.id === id),
+          1
+        );
+        setMessages(arr);
+      }
+      if (action == "qiote") {
+        setQiote(`Цитата: ${content}`);
+      }
+      if (action == "edit") {
+        let text = "";
+        let arr = [...messageState];
+        // ну тут я конечно поленился )))
+        text = prompt(`Редактирлвать сообщение ${content}`, content + text);
+        arr[arr.findIndex((item) => item.id === id)].content = text;
+        setMessages(arr);
+      }
+    },
+    [messageState]
+  );
 
   useEffect(() => {
     const lastMessage = messageState[messageState.length - 1];
@@ -68,7 +84,7 @@ export function App() {
       <div className="messageListBlock">
         <MessageList
           messagesList={messageState}
-          onDelMessage={handleDelMessage}
+          onDelMessage={handleChangeMessage}
         />
         <MessageBlock qioteEnter={Qiote} getPush={handlePush} />
       </div>

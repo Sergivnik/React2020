@@ -3,7 +3,6 @@ import "./messageBlock.sass";
 
 export function MessageBlock({ qioteEnter, getPush }) {
   const [text, setText] = useState(qioteEnter);
-  console.log(text);
 
   const getText = (event) => setText(event.currentTarget.value);
 
