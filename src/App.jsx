@@ -2,51 +2,93 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { MessageList } from "./container/messageList/MessageList.jsx";
 import { MessageBlock } from "./container/buttonPushMe/MessageBlock.jsx";
-
-
-const messages = [
-  { name: ROBOT, content: "Привет" },
-  { name: ROBOT, content: "Как дела?" },
-];
-let timerID;
+import { Header } from "./container/header/Header.jsx";
+import { ChatList } from "./container/chatList/chatList.jsx";
+import "./appStyle.sass";
 
 export const ROBOT = "Robot";
+const messages = [
+  { name: ROBOT, content: "Привет", id: 1 },
+  { name: ROBOT, content: "Как дела?", id: 2 },
+];
+
+
 export function App() {
   const [messageState, setMessages] = useState(messages);
+  const [Qiote, setQiote] = useState("");
+
   const handlePush = useCallback(
-    (message) => setMessages([...messageState, message]),
+    (message) => {
+      message.id = messageState[messageState.length - 1].id + 1;
+      setMessages([...messageState, message]);
+    },
+    [messageState]
+  );
+
+  // Пятое задание не сделал т.к. у меня такого бага не возникло (не иммитировать же)
+  // Сделал удаление, редактирование и цитирование
+
+  const handleChangeMessage = useCallback(
+    (id, action, content) => {
+      // И вот здесь нужен useCallback? console.log срабатывает одинаково. Как с useCallback так и без.
+      console.log("Ахтунг");
+      if (action == "delete") {
+        let arr = [...messageState];
+        //Почему нужен дополнительный массив. Почему нельзя как-нибудь так
+        // setMessages(
+        //   [...messageState].splice(
+        //     [...messageState].findIndex((item) => item.id === id)
+        //   ,1)
+        // );
+        // и он ведь не существует за пределами if ?
+        arr.splice(
+          arr.findIndex((item) => item.id === id),
+          1
+        );
+        setMessages(arr);
+      }
+      if (action == "qiote") {
+        setQiote(`Цитата: ${content}`);
+      }
+      if (action == "edit") {
+        let text = "";
+        let arr = [...messageState];
+        // ну тут я конечно поленился )))
+        text = prompt(`Редактирлвать сообщение ${content}`, content + text);
+        arr[arr.findIndex((item) => item.id === id)].content = text;
+        setMessages(arr);
+      }
+    },
     [messageState]
   );
 
   useEffect(() => {
-    // Как-то странно перерендеривается, если отправить несколько сообщений подряд
-    // за 3 сек. В итоге все нормально, но в процессе React наверное с ума сходит))
-    // кстати и в итоге могут данные пропадать. Если неостанавливаясь вводить
-    // 1 enter 2 enter 3 enter 4 enter 5 enter и т.д.
-    // Уже не пропадают т.к. убрал лишние useCallback в MessageBlock
-
-    clearTimeout(timerID);
-    // clearTimeout вроде решает проблему, но может есть другие способы
     const lastMessage = messageState[messageState.length - 1];
-    if (lastMessage.name !== ROBOT) {
+    let timerID;
+    {
       timerID = setTimeout(() => {
-        setMessages([
-          ...messageState,
-          {
+        if (lastMessage.name != ROBOT) {
+          handlePush({
             name: ROBOT,
             content: `Hello ${lastMessage.name}, I'm Robot`,
-          },
-        ]);
-        //setCheck(true);
-      }, 3000);
+          });
+        }
+      }, 500);
+      return () => clearTimeout(timerID);
     }
-    return () => clearTimeout(timerID);
   }, [messageState]);
 
   return (
-    <div>
-      <MessageList messagesList={messageState} />
-      <MessageBlock getPush={handlePush} />
+    <div className="layer">
+      <Header />
+      <ChatList />
+      <div className="messageListBlock">
+        <MessageList
+          messagesList={messageState}
+          onDelMessage={handleChangeMessage}
+        />
+        <MessageBlock qioteEnter={Qiote} getPush={handlePush} />
+      </div>
     </div>
   );
 }
