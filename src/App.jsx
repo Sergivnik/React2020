@@ -36,6 +36,13 @@ export function App() {
     if (action == "qiote") {
       setQiote(`Цитата: ${content}`);
     }
+    if (action == "edit") {
+      let text = "";
+      let arr = [...messageState];
+      text = prompt(`Редактирлвать сообщение ${content}`, content + text);
+      arr[arr.findIndex((item) => item.id === id)].content = text;
+      setMessages(arr);
+    }
   };
 
   useEffect(() => {
