@@ -7,7 +7,7 @@ export function MessageContextMenu({ id, name, content, onDelMessage }) {
     if (event.currentTarget.dataset.id == "btn-1") action = "qiote";
     if (event.currentTarget.dataset.id == "btn-2") action = "edit";
     if (event.currentTarget.dataset.id == "btn-3") action = "delete";
-    return onDelMessage(id, action, content);
+    onDelMessage(id, action, content);
   };
 
   return (
