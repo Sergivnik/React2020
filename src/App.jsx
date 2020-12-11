@@ -15,7 +15,7 @@ const messages = [
 
 export function App() {
   const [messageState, setMessages] = useState(messages);
-  const [Qiote, setQiote] = useState("");
+  const [qiote, setQiote] = useState("");
 
   const handlePush = useCallback(
     (message) => {
@@ -25,22 +25,14 @@ export function App() {
     [messageState]
   );
 
-  // Пятое задание не сделал т.к. у меня такого бага не возникло (не иммитировать же)
-  // Сделал удаление, редактирование и цитирование
+  const handleQiote = () => {
+    setQiote("");
+  };
 
   const handleChangeMessage = useCallback(
     (id, action, content) => {
-      // И вот здесь нужен useCallback? console.log срабатывает одинаково. Как с useCallback так и без.
-      console.log("Ахтунг");
       if (action == "delete") {
         let arr = [...messageState];
-        //Почему нужен дополнительный массив. Почему нельзя как-нибудь так
-        // setMessages(
-        //   [...messageState].splice(
-        //     [...messageState].findIndex((item) => item.id === id)
-        //   ,1)
-        // );
-        // и он ведь не существует за пределами if ?
         arr.splice(
           arr.findIndex((item) => item.id === id),
           1
@@ -59,7 +51,7 @@ export function App() {
         setMessages(arr);
       }
     },
-    [messageState]
+    [messageState, qiote]
   );
 
   useEffect(() => {
@@ -87,7 +79,11 @@ export function App() {
           messagesList={messageState}
           onDelMessage={handleChangeMessage}
         />
-        <MessageBlock qioteEnter={Qiote} getPush={handlePush} />
+        <MessageBlock
+          qioteEnter={qiote}
+          getPush={handlePush}
+          resetQiote={handleQiote}
+        />
       </div>
     </div>
   );
