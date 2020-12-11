@@ -7,11 +7,15 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import SendIcon from "@material-ui/icons/Send";
+import "./chatListStyle.sass";
 
 const useStyles = makeStyles(() => ({
   root: {
     width: "30%",
     backgroundColor: "#bacc64",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
 }));
 
@@ -21,7 +25,7 @@ export function ChatList({ listChat }) {
   return (
     <div className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
-        {listChat.map((item) => 
+        {listChat.map((item) => (
           <Link key={item.id} to={`/chat/${item.id}`}>
             <ListItem button>
               <ListItemIcon>
@@ -30,17 +34,9 @@ export function ChatList({ listChat }) {
               <ListItemText primary={item.nameId} />
             </ListItem>
           </Link>
-        )}
-        {/* <Link to="/chat/1/">
-          <ListItem button>
-            <ListItemIcon>
-              <SendIcon />
-            </ListItemIcon>
-            <ListItemText primary="Федор" />
-          </ListItem>
-        </Link> 
-        primaryText={item.nameId} leftIcon={<ContentSend /> */}
+        ))}
       </List>
+      <button className={"btnAddChat"}>Добавить чат</button>
     </div>
   );
 }

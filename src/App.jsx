@@ -15,16 +15,17 @@ const listChat = [
   { id: 1, nameId: "Федор" },
   { id: 2, nameId: "Петро" },
   { id: 3, nameId: "Оксана" },
+  { id: 4, nameId: "Вальдемар" },
 ];
 
 export function App({ chatId }) {
   if (!chatId) chatId = 2;
-  let chatName = listChat[chatId - 1].nameId;
 
   const [messageState, setMessages] = useState(messages);
   const [qiote, setQiote] = useState("");
-  const [listChatState, setlistChat] = useState(listChat);
-  //setlistChat(listChat);
+  const [listChatState, setlistChatState] = useState(listChat);
+  let chatName =
+    listChat[listChatState.findIndex((item) => item.id == chatId)].nameId;
 
   const handlePush = useCallback(
     (message) => {
@@ -82,7 +83,7 @@ export function App({ chatId }) {
 
   return (
     <div className="layer">
-      <Header chatId={chatId} />
+      <Header chatName={chatName} />
       <ChatList listChat={listChatState} />
       <div className="messageListBlock">
         <MessageList
