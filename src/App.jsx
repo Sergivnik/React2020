@@ -8,20 +8,31 @@ import "./appStyle.sass";
 
 const ROBOT = "Robot";
 const messages = [
-  { name: ROBOT, content: "Привет", id: 1 },
-  { name: ROBOT, content: "Как дела?", id: 2 },
+  { name: ROBOT, content: "Привет", id: 1, chatNumber: 1 },
+  { name: ROBOT, content: "Как дела?", id: 2, chatNumber: 1 },
+];
+const listChat = [
+  { id: 1, nameId: "Федор" },
+  { id: 2, nameId: "Петро" },
+  { id: 3, nameId: "Оксана" },
 ];
 
-export function App() {
+export function App({ chatId }) {
+  if (!chatId) chatId = 2;
+  let chatName = listChat[chatId - 1].nameId;
+
   const [messageState, setMessages] = useState(messages);
   const [qiote, setQiote] = useState("");
+  const [listChatState, setlistChat] = useState(listChat);
+  //setlistChat(listChat);
 
   const handlePush = useCallback(
     (message) => {
       message.id = messageState[messageState.length - 1].id + 1;
+      message.chatNumber = chatId;
       setMessages([...messageState, message]);
     },
-    [messageState]
+    [messageState, chatId]
   );
 
   const handleQiote = () => {
@@ -71,17 +82,19 @@ export function App() {
 
   return (
     <div className="layer">
-      <Header />
-      <ChatList />
+      <Header chatId={chatId} />
+      <ChatList listChat={listChatState} />
       <div className="messageListBlock">
         <MessageList
           messagesList={messageState}
           onDelMessage={handleChangeMessage}
+          chatId={chatId}
         />
         <MessageBlock
           qioteEnter={qiote}
           getPush={handlePush}
           resetQiote={handleQiote}
+          chatName={chatName}
         />
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./messageBlock.sass";
 
-export function MessageBlock({ qioteEnter, getPush, resetQiote }) {
+export function MessageBlock({ qioteEnter, getPush, resetQiote, chatName }) {
   const [text, setText] = useState("");
 
   const getText = (event) => setText(event.currentTarget.value);
@@ -9,7 +9,7 @@ export function MessageBlock({ qioteEnter, getPush, resetQiote }) {
   const onSubmit = (event) => {
     event.preventDefault();
     setText("");
-    getPush({ name: "Федор", content: text });
+    getPush({ name: chatName, content: text });
     resetQiote();
   };
 

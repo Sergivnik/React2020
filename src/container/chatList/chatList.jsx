@@ -1,5 +1,6 @@
 // Header.jsx
 import React from "react";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -14,42 +15,31 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export function ChatList() {
+export function ChatList({ listChat }) {
   const classes = useStyles();
-
+  console.log(listChat);
   return (
     <div className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
-        <ListItem button>
-          <ListItemIcon>
-            <SendIcon />
-          </ListItemIcon>
-          <ListItemText primary="Федор" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <SendIcon />
-          </ListItemIcon>
-          <ListItemText primary="Петро" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <SendIcon />
-          </ListItemIcon>
-          <ListItemText primary="Оксана" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <SendIcon />
-          </ListItemIcon>
-          <ListItemText primary="Вальдемар" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <SendIcon />
-          </ListItemIcon>
-          <ListItemText primary="Ефросинья" />
-        </ListItem>
+        {listChat.map((item) => 
+          <Link key={item.id} to={`/chat/${item.id}`}>
+            <ListItem button>
+              <ListItemIcon>
+                <SendIcon />
+              </ListItemIcon>
+              <ListItemText primary={item.nameId} />
+            </ListItem>
+          </Link>
+        )}
+        {/* <Link to="/chat/1/">
+          <ListItem button>
+            <ListItemIcon>
+              <SendIcon />
+            </ListItemIcon>
+            <ListItemText primary="Федор" />
+          </ListItem>
+        </Link> 
+        primaryText={item.nameId} leftIcon={<ContentSend /> */}
       </List>
     </div>
   );

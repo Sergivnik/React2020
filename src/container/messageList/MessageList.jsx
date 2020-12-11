@@ -1,17 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Message } from "../message/Message.jsx";
 import "./messageListStyle.sass";
 
-export function MessageList({ messagesList, onDelMessage }) {
-  const myRef = React.createRef();
+export function MessageList({ messagesList, onDelMessage, chatId }) {
+  const myRef = useRef(null);
+  console.log(messagesList);
   useEffect(() => {
     myRef.current.scrollTop = myRef.current.scrollHeight;
   });
   return (
     <div ref={myRef} className="messageListDiv">
-      {messagesList.map((item, index) => (
-        <Message userMessage={item} key={index} onDelMessage={onDelMessage} />
-      ))}
+      {messagesList.map((item, index) =>
+        item.chatNumber == chatId ? (
+          <Message userMessage={item} key={index} onDelMessage={onDelMessage} />
+        ) : null
+      )}
     </div>
   );
 }
