@@ -16,11 +16,11 @@ export function Profile({ chatId, listChat }) {
       </div>
       <div>
         <p>
-          <span>Имя:</span>
+          <b>Имя:  </b>
           {chatName}
         </p>
         <p>
-          <span>Возраст:</span>
+          <b>Возраст:  </b>
           {listChat[listChat.findIndex((item) => item.id == chatId)].age}
         </p>
       </div>

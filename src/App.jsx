@@ -1,11 +1,12 @@
 // App.jsx
 import React, { useCallback, useEffect, useState } from "react";
 import { MessageList } from "./container/messageList/MessageList.jsx";
-import { MessageBlock } from "./container/buttonPushMe/MessageBlock.jsx";
+import { MessageBlock } from "./container/messageBlock/MessageBlock.jsx";
 import { Header } from "./container/header/Header.jsx";
 import { ChatList } from "./container/chatList/chatList.jsx";
 import { Profile } from "./container/profile/Profile.jsx";
 import "./appStyle.sass";
+import { AddUser } from "./container/addUser/AddUser.jsx";
 
 const ROBOT = "Robot";
 const messages = [
@@ -25,8 +26,9 @@ export function App({ chatId, showProfile }) {
   const [messageState, setMessages] = useState(messages);
   const [qiote, setQiote] = useState("");
   const [listChatState, setlistChatState] = useState(listChat);
+  const [showAddFormState, setShowAddFormState] = useState(false);
   let chatName =
-    listChat[listChatState.findIndex((item) => item.id == chatId)].nameId;
+    listChatState[listChatState.findIndex((item) => item.id == chatId)].nameId;
 
   const handlePush = useCallback(
     (message) => {
@@ -66,6 +68,21 @@ export function App({ chatId, showProfile }) {
     [messageState, qiote]
   );
 
+  const handleClickAdd = useCallback(() => {
+    setShowAddFormState(true);
+  });
+
+  const handleAddUser = useCallback((name, age) => {
+    let user;
+    setShowAddFormState(false);
+    user = {
+      id: listChatState[listChatState.length - 1].id + 1,
+      nameId: name,
+      age: age,
+    };
+    setlistChatState([...listChatState, user]);
+  });
+
   useEffect(() => {
     const lastMessage = messageState[messageState.length - 1];
     let timerID;
@@ -85,7 +102,7 @@ export function App({ chatId, showProfile }) {
   return (
     <div className="layer">
       <Header chatName={chatName} />
-      <ChatList listChat={listChatState} />
+      <ChatList listChat={listChatState} onClickAdd={handleClickAdd} />
       <div className="messageListBlock">
         {showProfile ? (
           <Profile chatId={chatId} listChat={listChatState} />
@@ -102,6 +119,7 @@ export function App({ chatId, showProfile }) {
           chatName={chatName}
         />
       </div>
+      {showAddFormState ? <AddUser onAddUser={handleAddUser} /> : null}
     </div>
   );
 }

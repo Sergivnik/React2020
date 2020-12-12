@@ -1,7 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import { App } from "../App.jsx";
-import { Profile } from "./profile/Profile.jsx";
 
 export function Router() {
   return (

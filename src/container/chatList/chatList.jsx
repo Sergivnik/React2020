@@ -19,9 +19,9 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export function ChatList({ listChat }) {
+export function ChatList({ listChat, onClickAdd }) {
   const classes = useStyles();
-  console.log(listChat);
+  const handleClick = () => onClickAdd();
   return (
     <div className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
@@ -41,7 +41,9 @@ export function ChatList({ listChat }) {
           </div>
         ))}
       </List>
-      <button className={"btnAddChat"}>Добавить чат</button>
+      <button className={"btnAddChat"} onClick={handleClick}>
+        Добавить чат
+      </button>
     </div>
   );
 }
