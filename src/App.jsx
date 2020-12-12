@@ -4,7 +4,7 @@ import { MessageList } from "./container/messageList/MessageList.jsx";
 import { MessageBlock } from "./container/buttonPushMe/MessageBlock.jsx";
 import { Header } from "./container/header/Header.jsx";
 import { ChatList } from "./container/chatList/chatList.jsx";
-import { Profile } from "./container/profile/Profile.jsx"
+import { Profile } from "./container/profile/Profile.jsx";
 import "./appStyle.sass";
 
 const ROBOT = "Robot";
@@ -13,13 +13,13 @@ const messages = [
   { name: ROBOT, content: "Как дела?", id: 2, chatNumber: 1 },
 ];
 const listChat = [
-  { id: 1, nameId: "Федор" },
-  { id: 2, nameId: "Петро" },
-  { id: 3, nameId: "Оксана" },
-  { id: 4, nameId: "Вальдемар" },
+  { id: 1, nameId: "Федор", age: 54 },
+  { id: 2, nameId: "Петро", age: 82 },
+  { id: 3, nameId: "Оксана", age: 18 },
+  { id: 4, nameId: "Вальдемар", age: 27 },
 ];
 
-export function App({ chatId }) {
+export function App({ chatId, showProfile }) {
   if (!chatId) chatId = 2;
 
   const [messageState, setMessages] = useState(messages);
@@ -87,6 +87,9 @@ export function App({ chatId }) {
       <Header chatName={chatName} />
       <ChatList listChat={listChatState} />
       <div className="messageListBlock">
+        {showProfile ? (
+          <Profile chatId={chatId} listChat={listChatState} />
+        ) : null}
         <MessageList
           messagesList={messageState}
           onDelMessage={handleChangeMessage}

@@ -3,12 +3,27 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./profileStyle.sass";
 
-export function Profile({ chatId }) {
+export function Profile({ chatId, listChat }) {
   console.log("Profile");
+  let chatName =
+    listChat[listChat.findIndex((item) => item.id == chatId)].nameId;
+
   return (
     <div className="profileDiv">
-      <span >Чат {chatId}</span>
-      <Link to={"/"}>back</Link>
+      <div className="profileHeader">
+        <span className="profileP"><b>Профиль</b> {chatName}</span>
+        <Link className="profileLink" to={`/chat/${chatId}`}>back</Link>
+      </div>
+      <div>
+        <p>
+          <span>Имя:</span>
+          {chatName}
+        </p>
+        <p>
+          <span>Возраст:</span>
+          {listChat[listChat.findIndex((item) => item.id == chatId)].age}
+        </p>
+      </div>
     </div>
   );
 }

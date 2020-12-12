@@ -15,7 +15,9 @@ export function Router() {
       <Route
         exact
         path="/profile/:chatId/"
-        render={(obj) => <Profile chatId={(obj.match.params.chatId)} />}
+        render={(obj) => (
+          <App chatId={Number(obj.match.params.chatId)} showProfile={true} />
+        )}
       />
     </Switch>
   );
