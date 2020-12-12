@@ -26,14 +26,19 @@ export function ChatList({ listChat }) {
     <div className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
         {listChat.map((item) => (
-          <Link key={item.id} to={`/chat/${item.id}`}>
-            <ListItem button>
-              <ListItemIcon>
-                <SendIcon />
-              </ListItemIcon>
-              <ListItemText primary={item.nameId} />
-            </ListItem>
-          </Link>
+          <div key={item.id} className={"LinkBtn"}>
+            <Link to={`/chat/${item.id}`}>
+              <ListItem button>
+                <ListItemIcon>
+                  <SendIcon />
+                </ListItemIcon>
+                <ListItemText primary={item.nameId} />
+              </ListItem>
+            </Link>
+            <Link to={`/profile/${item.id}`}>
+              <button className={"btnProfile"}>{item.nameId[0]}</button>
+            </Link>
+          </div>
         ))}
       </List>
       <button className={"btnAddChat"}>Добавить чат</button>

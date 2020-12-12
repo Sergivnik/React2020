@@ -4,6 +4,7 @@ import { MessageList } from "./container/messageList/MessageList.jsx";
 import { MessageBlock } from "./container/buttonPushMe/MessageBlock.jsx";
 import { Header } from "./container/header/Header.jsx";
 import { ChatList } from "./container/chatList/chatList.jsx";
+import { Profile } from "./container/profile/Profile.jsx"
 import "./appStyle.sass";
 
 const ROBOT = "Robot";
