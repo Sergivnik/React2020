@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import "./addUserDivStyle.sass";
 
-export function AddUser({ onAddUser }) {
+export function AddUser({ onAddUser, onCanselAddUser }) {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
 
@@ -14,20 +14,43 @@ export function AddUser({ onAddUser }) {
     onAddUser(name, age);
   };
 
+  const onCansel = () => {
+    onCanselAddUser();
+  };
+
   return (
-    <form className="addUserDiv" onSubmit={onSubmit}>
-      <h2> Добавить пользователя</h2>
-      <label htmlFor="name">
-        Имя
-        <input id={"name"} value={name} onChange={getName} required />
-      </label>
+    <div className="addUserDiv">
+      <form className="addUserForm" onSubmit={onSubmit}>
+        <h2 className="addUserh2"> Добавить пользователя</h2>
+        <label className="addUserlabel" htmlFor="name">
+          Имя
+          <input
+            className="addUserinput"
+            id={"name"}
+            value={name}
+            onChange={getName}
+            required
+          />
+        </label>
 
-      <label htmlFor="age">
-        Возраст
-        <input id={"age"} value={age} onChange={getAge} required />
-      </label>
+        <label className="addUserlabel" htmlFor="age">
+          Возраст
+          <input
+            className="addUserinput"
+            id={"age"}
+            value={age}
+            onChange={getAge}
+            required
+          />
+        </label>
 
-      <button type={"submit"}>Добавить</button>
-    </form>
+        <button className="addUserbutton" type={"submit"}>
+          Добавить
+        </button>
+      </form>
+      <button className="addUserbutton" onClick={onCansel}>
+        Отмена
+      </button>
+    </div>
   );
 }

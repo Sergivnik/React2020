@@ -21,7 +21,7 @@ const listChat = [
 ];
 
 export function App({ chatId, showProfile }) {
-  if (!chatId) chatId = 2;
+  if (!chatId) chatId = 1;
 
   const [messageState, setMessages] = useState(messages);
   const [qiote, setQiote] = useState("");
@@ -59,9 +59,7 @@ export function App({ chatId, showProfile }) {
       if (action == "edit") {
         let text = "";
         let arr = [...messageState];
-        // ну тут я конечно поленился )))
-        text = prompt(`Редактирлвать сообщение ${content}`, content + text);
-        arr[arr.findIndex((item) => item.id === id)].content = text;
+        arr[arr.findIndex((item) => item.id === id)].content = content;
         setMessages(arr);
       }
     },
@@ -69,7 +67,11 @@ export function App({ chatId, showProfile }) {
   );
 
   const handleClickAdd = useCallback(() => {
-    setShowAddFormState(true);
+    setShowAddFormState(!showAddFormState);
+  });
+
+  const handleClickAddCansel = useCallback(() => {
+    setShowAddFormState(false);
   });
 
   const handleAddUser = useCallback((name, age) => {
@@ -111,7 +113,7 @@ export function App({ chatId, showProfile }) {
           messagesList={messageState}
           onDelMessage={handleChangeMessage}
           chatId={chatId}
-        />
+        ></MessageList>
         <MessageBlock
           qioteEnter={qiote}
           getPush={handlePush}
@@ -119,7 +121,9 @@ export function App({ chatId, showProfile }) {
           chatName={chatName}
         />
       </div>
-      {showAddFormState ? <AddUser onAddUser={handleAddUser} /> : null}
+      {showAddFormState ? (
+        <AddUser onAddUser={handleAddUser} onCanselAddUser={handleClickAdd} />
+      ) : null}
     </div>
   );
 }

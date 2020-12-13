@@ -1,13 +1,21 @@
 // MessageContextMenu.jsx
 import React from "react";
 
-export function MessageContextMenu({ id, name, content, onDelMessage }) {
+export function MessageContextMenu({
+  id,
+  name,
+  content,
+  onDelMessage,
+  onEdit,
+}) {
   const handleClick = (event) => {
     let action;
     if (event.currentTarget.dataset.id == "btn-1") action = "qiote";
-    if (event.currentTarget.dataset.id == "btn-2") action = "edit";
     if (event.currentTarget.dataset.id == "btn-3") action = "delete";
     onDelMessage(id, action, content);
+  };
+  const handleClickEdit = () => {
+    onEdit();
   };
 
   return (
@@ -18,7 +26,7 @@ export function MessageContextMenu({ id, name, content, onDelMessage }) {
         </button>
       ) : null}
       {name != "Robot" ? (
-        <button data-id="btn-2" onClick={handleClick}>
+        <button data-id="btn-2" onClick={handleClickEdit}>
           Редактировать
         </button>
       ) : null}
