@@ -4,7 +4,6 @@ import "./messageListStyle.sass";
 
 export function MessageList({ messagesList, onDelMessage, chatId }) {
   const myRef = useRef(null);
-  console.log(messagesList);
   useEffect(() => {
     myRef.current.scrollTop = myRef.current.scrollHeight;
   });
