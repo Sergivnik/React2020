@@ -11,9 +11,11 @@ export function Router() {
   return (
     <Switch>
       <Route exact path="/" component={App} />
-      <Route exact path="/chat/:chatId/">
-        <RouteApp/>
-      </Route>
+      <Route
+        exact
+        path="/chat/:chatId/"
+        render={(obj) => <App chatId={Number(obj.match.params.chatId)} />}
+      />
       <Route
         exact
         path="/profile/:chatId/"
