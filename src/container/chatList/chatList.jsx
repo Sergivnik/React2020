@@ -1,5 +1,6 @@
-// Header.jsx
+// ChatList.jsx
 import React from "react";
+import connect from "react-redux/es/connect/connect";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -19,13 +20,19 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export function ChatList({ listChat, onClickAdd }) {
+const mapStateToProps = ({ chatReducer }) => ({
+  chats: chatReducer.chats,
+});
+
+function ChatList(props) {
+  const { onClickAdd, chats } = props;
+  console.log(props.addChat);
   const classes = useStyles();
   const handleClick = () => onClickAdd();
   return (
     <div className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
-        {listChat.map((item) => (
+        {chats.map((item) => (
           <div key={item.id} className={"LinkBtn"}>
             <Link to={`/chat/${item.id}`}>
               <ListItem button>
@@ -47,3 +54,5 @@ export function ChatList({ listChat, onClickAdd }) {
     </div>
   );
 }
+
+export default connect(mapStateToProps)(ChatList);

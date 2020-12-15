@@ -3,10 +3,10 @@ import React, { useCallback, useEffect, useState } from "react";
 import { MessageList } from "./container/messageList/MessageList.jsx";
 import { MessageBlock } from "./container/messageBlock/MessageBlock.jsx";
 import { Header } from "./container/header/Header.jsx";
-import { ChatList } from "./container/chatList/chatList.jsx";
+import  ChatList  from "./container/chatList/chatList.jsx";
 import { Profile } from "./container/profile/Profile.jsx";
 import "./appStyle.sass";
-import { AddUser } from "./container/addUser/AddUser.jsx";
+import  AddUser  from "./container/addUser/AddUser.jsx";
 
 const ROBOT = "Robot";
 const messages = [
@@ -104,7 +104,7 @@ export function App({ chatId, showProfile }) {
   return (
     <div className="layer">
       <Header chatName={chatName} />
-      <ChatList listChat={listChatState} onClickAdd={handleClickAdd} />
+      <ChatList onClickAdd={handleClickAdd} />
       <div className="messageListBlock">
         {showProfile ? (
           <Profile chatId={chatId} listChat={listChatState} />
@@ -122,7 +122,7 @@ export function App({ chatId, showProfile }) {
         />
       </div>
       {showAddFormState ? (
-        <AddUser onAddUser={handleAddUser} onCanselAddUser={handleClickAdd} />
+        <AddUser onCanselAddUser={handleClickAdd} />
       ) : null}
     </div>
   );

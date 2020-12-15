@@ -1,8 +1,21 @@
 // AddUser.jsx
 import React, { useState } from "react";
+import { bindActionCreators } from "redux";
+import connect from "react-redux/es/connect/connect";
+import { addChat } from "../../actions/chatActions.js";
 import "./addUserDivStyle.sass";
 
-export function AddUser({ onAddUser, onCanselAddUser }) {
+const mapStateToProps = ({ chatReducer }) => ({
+  chats: chatReducer.chats,
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ addChat }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddUser);
+
+function AddUser(props) {
+  const { onAddUser, onCanselAddUser, addChat } = props;
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
 
@@ -11,7 +24,8 @@ export function AddUser({ onAddUser, onCanselAddUser }) {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    onAddUser(name, age);
+    addChat(name, age);
+    onCanselAddUser();
   };
 
   const onCansel = () => {
