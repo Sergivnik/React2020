@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route, useParams } from "react-router-dom";
-import { App } from "../App.jsx";
+import App from "../App.jsx";
 
 function RouteApp() {
   const { chatId } = useParams();

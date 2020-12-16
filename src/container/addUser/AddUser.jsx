@@ -14,8 +14,7 @@ const mapDispatchToProps = (dispatch) =>
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddUser);
 
-function AddUser(props) {
-  const { onAddUser, onCanselAddUser, addChat } = props;
+function AddUser({ onCanselAddUser, addChat }) {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
 

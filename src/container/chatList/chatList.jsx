@@ -24,9 +24,7 @@ const mapStateToProps = ({ chatReducer }) => ({
   chats: chatReducer.chats,
 });
 
-function ChatList(props) {
-  const { onClickAdd, chats } = props;
-  console.log(props.addChat);
+function ChatList({ onClickAdd, chats }) {
   const classes = useStyles();
   const handleClick = () => onClickAdd();
   return (
