@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
+import connect from "react-redux/es/connect/connect";
 import "./messageBlock.sass";
 
-export function MessageBlock({ qioteEnter, getPush, resetQiote, chatName }) {
+const mapStateToProps = ({ chatReducer }) => ({
+  qiote: chatReducer.qiote,
+});
+
+export default connect(mapStateToProps)(MessageBlock);
+
+function MessageBlock({ qiote, getPush, resetQiote, chatName }) {
   const [text, setText] = useState("");
 
   const getText = (event) => setText(event.currentTarget.value);
@@ -21,8 +28,8 @@ export function MessageBlock({ qioteEnter, getPush, resetQiote, chatName }) {
   };
 
   useEffect(() => {
-    setText(qioteEnter);
-  }, [qioteEnter]);
+    setText(qiote);
+  }, [qiote]);
 
   return (
     <form className="messageBlock" onSubmit={onSubmit}>

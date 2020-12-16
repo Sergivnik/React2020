@@ -1,9 +1,25 @@
 // Message.jsx
 import React, { useState, useRef, useEffect } from "react";
+import { bindActionCreators } from "redux";
+import connect from "react-redux/es/connect/connect";
+import { changeMessage } from "../../actions/messageChange.js";
 import MessageContextMenu from "../messageContextMenu/MessageContextMenu.jsx";
 import "./messageStyle.sass";
 
-export function Message({ userMessage: { name, content, id }, onDelMessage }) {
+const mapStateToProps = ({ chatReducer }) => ({
+  messages: chatReducer.messages,
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ changeMessage }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Message);
+
+function Message({
+  userMessage: { name, content, id },
+  changeMessage,
+  onDelMessage,
+}) {
   const myRef = useRef(null);
   const [showMenu, setShowMenu] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
@@ -17,7 +33,7 @@ export function Message({ userMessage: { name, content, id }, onDelMessage }) {
   const getContent = (event) => setText(event.currentTarget.value);
   const handleKeyUp = (event) => {
     if (event.keyCode == 13) {
-      onDelMessage(id, "edit", text);
+      changeMessage(id, text, "edit");
       setShowEdit(false);
     }
   };

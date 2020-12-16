@@ -15,6 +15,7 @@ const initialStore = {
     { name: ROBOT, content: "Привет", id: 1, chatNumber: 1 },
     { name: ROBOT, content: "Как поживаешь?", id: 2, chatNumber: 1 },
   ],
+  qiote: "",
 };
 
 export default function chatReducer(store = initialStore, action) {
@@ -45,9 +46,26 @@ export default function chatReducer(store = initialStore, action) {
       });
     }
     case CHANGE_MESSAGE: {
-      //let arr = Object.assign([], store.messages);
-      let arr = store.messages.filter((item) => item.id !== action.messageId);
-      console.log(arr, store.messages);
+      let arr;
+      let textQiote;
+      if (action.typeOfChange == "qiote") {
+        textQiote = action.text;
+        return { ...store, qiote: textQiote };
+      }
+      if (action.typeOfChange == "delete") {
+        arr = store.messages.filter((item) => item.id !== action.messageId);
+        return { ...store, messages: [...arr] };
+      }
+      if (action.typeOfChange == "edit") {
+        arr = store.messages.map((item) => {
+          if (item.id !== action.messageId) {
+            return item;
+          } else {
+            item.content = action.text;
+            return item;
+          }
+        });
+      }
       return { ...store, messages: [...arr] };
     }
     default:

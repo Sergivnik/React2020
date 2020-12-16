@@ -13,19 +13,12 @@ const mapDispatchToProps = (dispatch) =>
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageContextMenu);
 
-function MessageContextMenu({
-  id,
-  name,
-  content,
-  onDelMessage,
-  onEdit,
-  changeMessage,
-}) {
+function MessageContextMenu({ id, name, content, onEdit, changeMessage }) {
   const handleClick = (event) => {
     let action;
     if (event.currentTarget.dataset.id == "btn-1") action = "qiote";
     if (event.currentTarget.dataset.id == "btn-3") action = "delete";
-    changeMessage(id, action, content);
+    changeMessage(id, content, action);
   };
   const handleClickEdit = () => {
     onEdit();

@@ -7,22 +7,21 @@ function RouteApp() {
   return <App chatId={chatId}></App>;
 }
 
+function RouteProfile() {
+  const { chatId, showProfile } = useParams();
+  return <App chatId={chatId} showProfile={true}></App>;
+}
+
 export function Router() {
   return (
     <Switch>
       <Route exact path="/" component={App} />
-      <Route
-        exact
-        path="/chat/:chatId/"
-        render={(obj) => <App chatId={Number(obj.match.params.chatId)} />}
-      />
-      <Route
-        exact
-        path="/profile/:chatId/"
-        render={(obj) => (
-          <App chatId={Number(obj.match.params.chatId)} showProfile={true} />
-        )}
-      />
+      <Route exact path="/chat/:chatId/">
+        <RouteApp />
+      </Route>
+      <Route exact path="/profile/:chatId/">
+        <RouteProfile />
+      </Route>
     </Switch>
   );
 }

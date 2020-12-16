@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import "./profileStyle.sass";
 
 export function Profile({ chatId, listChat }) {
-  console.log("Profile");
   let chatName =
     listChat[listChat.findIndex((item) => item.id == chatId)].nameId;
 
