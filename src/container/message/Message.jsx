@@ -1,6 +1,6 @@
 // Message.jsx
 import React, { useState, useRef, useEffect } from "react";
-import { MessageContextMenu } from "../messageContextMenu/MessageContextMenu.jsx";
+import MessageContextMenu from "../messageContextMenu/MessageContextMenu.jsx";
 import "./messageStyle.sass";
 
 export function Message({ userMessage: { name, content, id }, onDelMessage }) {

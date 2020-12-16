@@ -1,6 +1,7 @@
 import update from "react-addons-update";
 import { ADD_CHAT } from "../actions/chatActions";
 import { SEND_MESSAGE } from "../actions/messageActions";
+import { CHANGE_MESSAGE } from "../actions/messageChange.js";
 
 const ROBOT = "Robot";
 const initialStore = {
@@ -35,13 +36,19 @@ export default function chatReducer(store = initialStore, action) {
           $merge: {
             [id - 1]: {
               name: action.sender,
-              content: action.sender,
+              content: action.text,
               id: id,
               chatNumber: action.chatId,
             },
           },
         },
       });
+    }
+    case CHANGE_MESSAGE: {
+      //let arr = Object.assign([], store.messages);
+      let arr = store.messages.filter((item) => item.id !== action.messageId);
+      console.log(arr, store.messages);
+      return { ...store, messages: [...arr] };
     }
     default:
       return store;

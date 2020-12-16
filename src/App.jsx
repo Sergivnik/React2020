@@ -37,11 +37,16 @@ function App({ chatId, showProfile, chats, messages, sendMessage }) {
 
   const handlePush = useCallback(
     (message) => {
-      message.id = messageState[messageState.length - 1].id + 1;
+      message.id = messages[messages.length - 1].id + 1;
       message.chatNumber = chatId;
-      setMessages([...messageState, message]);
+      sendMessage(
+        message.id,
+        message.content,
+        message.name,
+        message.chatNumber
+      );
     },
-    [messageState, chatId]
+    [messages, chatId]
   );
 
   const handleQiote = () => {
@@ -75,7 +80,7 @@ function App({ chatId, showProfile, chats, messages, sendMessage }) {
   });
 
   useEffect(() => {
-    const lastMessage = messageState[messageState.length - 1];
+    const lastMessage = messages[messages.length - 1];
     let timerID;
     {
       timerID = setTimeout(() => {
@@ -88,7 +93,7 @@ function App({ chatId, showProfile, chats, messages, sendMessage }) {
       }, 500);
       return () => clearTimeout(timerID);
     }
-  }, [messageState]);
+  }, [messages]);
 
   return (
     <div className="layer">
@@ -97,7 +102,7 @@ function App({ chatId, showProfile, chats, messages, sendMessage }) {
       <div className="messageListBlock">
         {showProfile ? <Profile chatId={chatId} listChat={chats} /> : null}
         <MessageList
-          messagesList={messageState}
+          messagesList={messages}
           onDelMessage={handleChangeMessage}
           chatId={chatId}
         ></MessageList>
