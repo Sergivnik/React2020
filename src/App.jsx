@@ -30,20 +30,6 @@ function App({ chatId, showProfile, chats, messages, sendMessage }) {
   const [showAddFormState, setShowAddFormState] = useState(false);
   let chatName = chats.find((item) => item.id == chatId).nameId;
 
-  const handlePush = useCallback(
-    (message) => {
-      message.id = messages[messages.length - 1].id + 1;
-      message.chatNumber = chatId;
-      sendMessage(
-        message.id,
-        message.content,
-        message.name,
-        message.chatNumber
-      );
-    },
-    [messages, chatId]
-  );
-
   const handleClickAdd = useCallback(() => {
     setShowAddFormState(!showAddFormState);
   });
@@ -54,10 +40,12 @@ function App({ chatId, showProfile, chats, messages, sendMessage }) {
     {
       timerID = setTimeout(() => {
         if (lastMessage.name != ROBOT) {
-          handlePush({
-            name: ROBOT,
-            content: `Hello ${lastMessage.name}, I'm Robot`,
-          });
+          sendMessage(
+            messages[messages.length - 1].id + 1,
+            `Hello ${lastMessage.name}, I'm Robot`,
+            ROBOT,
+            chatId
+          );
         }
       }, 500);
       return () => clearTimeout(timerID);
@@ -73,7 +61,7 @@ function App({ chatId, showProfile, chats, messages, sendMessage }) {
           <Profile chatId={chatId} listChat={chats} chatName={chatName} />
         )}
         <MessageList messagesList={messages} chatId={chatId}></MessageList>
-        <MessageBlock getPush={handlePush} chatName={chatName} />
+        <MessageBlock chatId={chatId} />
       </div>
       {showAddFormState && <AddUser onCanselAddUser={handleClickAdd} />}
     </div>

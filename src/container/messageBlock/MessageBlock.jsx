@@ -7,22 +7,31 @@ import "./messageBlock.sass";
 
 const mapStateToProps = ({ chatReducer }) => ({
   qiote: chatReducer.qiote,
+  chats: chatReducer.chats,
+  messages: chatReducer.messages,
 });
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ changeMessage }, dispatch);
+  bindActionCreators({ changeMessage, sendMessage }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageBlock);
 
-function MessageBlock({ qiote, getPush, chatName, changeMessage }) {
+function MessageBlock({
+  chatId,       // номер чата
+  qiote,        // Цитата сообщения
+  chats,        // Список чатов
+  messages,     // Массив сообщений
+  changeMessage,// Функция изменения сообщения
+  sendMessage,  // Функция добавления сообщения в массив
+}) {
   const [text, setText] = useState("");
-  //const chatName = chats.find((item) => item.id == chatId).nameId;
+  const chatName = chats.find((item) => item.id == chatId).nameId;
 
   const getText = (event) => setText(event.currentTarget.value);
 
   const onSubmit = (event) => {
     event.preventDefault();
     setText("");
-    getPush({ name: chatName, content: text });
+    sendMessage(messages[messages.length - 1].id + 1, text, chatName, chatId);
     changeMessage(null, "", "qiote");
   };
 
