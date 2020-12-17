@@ -9,7 +9,6 @@ function RouteApp() {
 
 function RouteProfile() {
   const { chatId } = useParams();
-  debugger;
   return <App chatId={chatId} showProfile={true}></App>;
 }
 
