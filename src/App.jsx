@@ -23,7 +23,9 @@ const mapDispatchToProps = (dispatch) =>
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 function App({ chatId, showProfile, chats, messages, sendMessage }) {
-  if (!chatId) chatId = 1;
+  //Да, понимаю, что плохо, но не придумал ничего лучшего у меня с Router, что-то не ладится
+  //Он у меня вверху расположен и я не пойму как в нем отслеживать маршрут
+  if (!chats.find((item) => item.id == chatId)) chatId = 1;
 
   const [showAddFormState, setShowAddFormState] = useState(false);
   let chatName = chats.find((item) => item.id == chatId).nameId;

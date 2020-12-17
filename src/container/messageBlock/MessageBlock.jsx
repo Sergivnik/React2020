@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { bindActionCreators } from "redux";
 import connect from "react-redux/es/connect/connect";
 import { changeMessage } from "../../actions/messageChange.js";
+import { sendMessage } from "../../actions/messageActions.js";
 import "./messageBlock.sass";
 
 const mapStateToProps = ({ chatReducer }) => ({
@@ -14,6 +15,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(MessageBlock);
 
 function MessageBlock({ qiote, getPush, chatName, changeMessage }) {
   const [text, setText] = useState("");
+  //const chatName = chats.find((item) => item.id == chatId).nameId;
 
   const getText = (event) => setText(event.currentTarget.value);
 
