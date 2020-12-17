@@ -2,14 +2,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { bindActionCreators } from "redux";
 import connect from "react-redux/es/connect/connect";
-import { MessageList } from "./container/messageList/MessageList.jsx";
-import MessageBlock from "./container/messageBlock/MessageBlock.jsx";
-import { Header } from "./container/header/Header.jsx";
 import ChatList from "./container/chatList/chatList.jsx";
-import { Profile } from "./container/profile/Profile.jsx";
-import "./appStyle.sass";
+import MessageBlock from "./container/messageBlock/MessageBlock.jsx";
 import AddUser from "./container/addUser/AddUser.jsx";
+import { Header } from "./container/header/Header.jsx";
+import { MessageList } from "./container/messageList/MessageList.jsx";
+import { Profile } from "./container/profile/Profile.jsx";
 import { sendMessage } from "./actions/messageActions.js";
+import "./appStyle.sass";
 
 const ROBOT = "Robot";
 const mapStateToProps = ({ chatReducer }) => ({
@@ -25,9 +25,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 function App({ chatId, showProfile, chats, messages, sendMessage }) {
   if (!chatId) chatId = 1;
 
-  const [qiote, setQiote] = useState("");
   const [showAddFormState, setShowAddFormState] = useState(false);
-  let chatName = chats[chats.findIndex((item) => item.id == chatId)].nameId;
+  let chatName = chats.find((item) => item.id == chatId).nameId;
 
   const handlePush = useCallback(
     (message) => {
@@ -42,10 +41,6 @@ function App({ chatId, showProfile, chats, messages, sendMessage }) {
     },
     [messages, chatId]
   );
-
-  const handleQiote = () => {
-    setQiote("");
-  };
 
   const handleClickAdd = useCallback(() => {
     setShowAddFormState(!showAddFormState);
@@ -72,18 +67,13 @@ function App({ chatId, showProfile, chats, messages, sendMessage }) {
       <Header chatName={chatName} />
       <ChatList onClickAdd={handleClickAdd} />
       <div className="messageListBlock">
-        {showProfile ? <Profile chatId={chatId} listChat={chats} /> : null}
-        <MessageList
-          messagesList={messages}
-          chatId={chatId}
-        ></MessageList>
-        <MessageBlock
-          getPush={handlePush}
-          resetQiote={handleQiote}
-          chatName={chatName}
-        />
+        {showProfile && (
+          <Profile chatId={chatId} listChat={chats} chatName={chatName} />
+        )}
+        <MessageList messagesList={messages} chatId={chatId}></MessageList>
+        <MessageBlock getPush={handlePush} chatName={chatName} />
       </div>
-      {showAddFormState ? <AddUser onCanselAddUser={handleClickAdd} /> : null}
+      {showAddFormState && <AddUser onCanselAddUser={handleClickAdd} />}
     </div>
   );
 }

@@ -3,10 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./profileStyle.sass";
 
-export function Profile({ chatId, listChat }) {
-  let chatName =
-    listChat[listChat.findIndex((item) => item.id == chatId)].nameId;
-
+export function Profile({ chatId, listChat, chatName }) {
   return (
     <div className="profileDiv">
       <div className="profileHeader">
@@ -20,7 +17,7 @@ export function Profile({ chatId, listChat }) {
         </p>
         <p>
           <b>Возраст:  </b>
-          {listChat[listChat.findIndex((item) => item.id == chatId)].age}
+          {listChat.find((item) => item.id == chatId).age}
         </p>
       </div>
     </div>

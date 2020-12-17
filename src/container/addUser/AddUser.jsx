@@ -27,10 +27,6 @@ function AddUser({ onCanselAddUser, addChat }) {
     onCanselAddUser();
   };
 
-  const onCansel = () => {
-    onCanselAddUser();
-  };
-
   return (
     <div className="addUserDiv">
       <form className="addUserForm" onSubmit={onSubmit}>
@@ -61,7 +57,7 @@ function AddUser({ onCanselAddUser, addChat }) {
           Добавить
         </button>
       </form>
-      <button className="addUserbutton" onClick={onCansel}>
+      <button className="addUserbutton" onClick={onCanselAddUser}>
         Отмена
       </button>
     </div>

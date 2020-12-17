@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, useParams } from "react-router-dom";
+import { Switch, Route, useParams, Redirect } from "react-router-dom";
 import App from "../App.jsx";
 
 function RouteApp() {
@@ -8,7 +8,8 @@ function RouteApp() {
 }
 
 function RouteProfile() {
-  const { chatId, showProfile } = useParams();
+  const { chatId } = useParams();
+  debugger;
   return <App chatId={chatId} showProfile={true}></App>;
 }
 
@@ -22,6 +23,7 @@ export function Router() {
       <Route exact path="/profile/:chatId/">
         <RouteProfile />
       </Route>
+      <Redirect to={"/chat/1/"} />
     </Switch>
   );
 }

@@ -26,7 +26,6 @@ const mapStateToProps = ({ chatReducer }) => ({
 
 function ChatList({ onClickAdd, chats }) {
   const classes = useStyles();
-  const handleClick = () => onClickAdd();
   return (
     <div className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
@@ -46,7 +45,7 @@ function ChatList({ onClickAdd, chats }) {
           </div>
         ))}
       </List>
-      <button className={"btnAddChat"} onClick={handleClick}>
+      <button className={"btnAddChat"} onClick={onClickAdd}>
         Добавить чат
       </button>
     </div>

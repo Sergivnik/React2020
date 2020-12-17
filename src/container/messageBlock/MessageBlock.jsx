@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { bindActionCreators } from "redux";
 import connect from "react-redux/es/connect/connect";
+import { changeMessage } from "../../actions/messageChange.js";
 import "./messageBlock.sass";
 
 const mapStateToProps = ({ chatReducer }) => ({
   qiote: chatReducer.qiote,
 });
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ changeMessage }, dispatch);
 
-export default connect(mapStateToProps)(MessageBlock);
+export default connect(mapStateToProps, mapDispatchToProps)(MessageBlock);
 
-function MessageBlock({ qiote, getPush, resetQiote, chatName }) {
+function MessageBlock({ qiote, getPush, chatName, changeMessage }) {
   const [text, setText] = useState("");
 
   const getText = (event) => setText(event.currentTarget.value);
@@ -17,13 +21,12 @@ function MessageBlock({ qiote, getPush, resetQiote, chatName }) {
     event.preventDefault();
     setText("");
     getPush({ name: chatName, content: text });
-    resetQiote();
+    changeMessage(null, "", "qiote");
   };
 
   const handleKeyUp = (event) => {
     if (event.keyCode == 13) {
       setText("");
-      resetQiote();
     }
   };
 

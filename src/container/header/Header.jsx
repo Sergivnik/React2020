@@ -5,7 +5,7 @@ import "./headerStyle.sass";
 export function Header({ chatName }) {
   return (
     <div className="headerDiv">
-      <span style={{ fontSize: "20px" }}>Чат {chatName}</span>
+      <span className="headerSpan">Чат {chatName}</span>
     </div>
   );
 }
