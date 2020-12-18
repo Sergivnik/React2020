@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, useParams, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import RouteApp from "../container/Router/RouteApp.js";
 import RouteProfile from "../container/Router/RouteProfile.js";
 
