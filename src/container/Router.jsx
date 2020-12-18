@@ -15,7 +15,7 @@ export function Router() {
       <Route exact path="/profile/:chatId/">
         <RouteProfile />
       </Route>
-      <Redirect to={"/chat/1/"} />
+      <Redirect to="/chat/1/" />
     </Switch>
   );
 }

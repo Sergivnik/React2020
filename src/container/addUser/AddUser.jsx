@@ -5,20 +5,11 @@ import connect from "react-redux/es/connect/connect";
 import { addChat } from "../../actions/chatActions.js";
 import "./addUserDivStyle.sass";
 
-const mapStateToProps = ({ chatReducer }) => ({
-  chats: chatReducer.chats,
-});
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ addChat }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddUser);
-
 function AddUser({ onCanselAddUser, addChat }) {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
 
-  const getName = (event) => setName(event.currentTarget.value);
+  const updateName = (event) => setName(event.currentTarget.value);
   const getAge = (event) => setAge(event.currentTarget.value);
 
   const onSubmit = (event) => {
@@ -35,9 +26,9 @@ function AddUser({ onCanselAddUser, addChat }) {
           Имя
           <input
             className="addUserinput"
-            id={"name"}
+            id="name"
             value={name}
-            onChange={getName}
+            onChange={updateName}
             required
           />
         </label>
@@ -63,3 +54,12 @@ function AddUser({ onCanselAddUser, addChat }) {
     </div>
   );
 }
+
+const mapStateToProps = ({ chatReducer }) => ({
+  chats: chatReducer.chats,
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ addChat }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddUser);

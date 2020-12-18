@@ -1,5 +1,5 @@
 // App.jsx
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { bindActionCreators } from "redux";
 import connect from "react-redux/es/connect/connect";
 import ChatList from "./container/chatList/chatList.jsx";
@@ -12,20 +12,12 @@ import { sendMessage } from "./actions/messageActions.js";
 import "./appStyle.sass";
 
 const ROBOT = "Robot";
-const mapStateToProps = ({ chatReducer }) => ({
-  chats: chatReducer.chats,
-  messages: chatReducer.messages,
-});
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ sendMessage }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 function App({ chatId, showProfile, chats, messages, sendMessage }) {
-
   const [showAddFormState, setShowAddFormState] = useState(false);
-  let chatName = chats.find((item) => item.id == chatId).nameId;
+  const chatName = useMemo(
+    () => chats.find((item) => item.id == chatId).nameId
+  );
 
   const handleClickAdd = useCallback(() => {
     setShowAddFormState(!showAddFormState);
@@ -47,7 +39,7 @@ function App({ chatId, showProfile, chats, messages, sendMessage }) {
       }, 500);
       return () => clearTimeout(timerID);
     }
-  }, [messages]);
+  }, [messages, chatId]);
 
   return (
     <div className="layer">
@@ -64,3 +56,13 @@ function App({ chatId, showProfile, chats, messages, sendMessage }) {
     </div>
   );
 }
+
+const mapStateToProps = ({ chatReducer }) => ({
+  chats: chatReducer.chats,
+  messages: chatReducer.messages,
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ sendMessage }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
