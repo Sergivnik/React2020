@@ -1,37 +1,16 @@
 import React from "react";
 import { Switch, Route, useParams, Redirect } from "react-router-dom";
-import { bindActionCreators } from "redux";
-import connect from "react-redux/es/connect/connect";
-import App from "../App.jsx";
+import RouteApp from "../container/Router/RouteApp.js";
+import RouteProfile from "../container/Router/RouteProfile.js";
 
-const mapStateToProps = ({ chatReducer }) => ({
-  chats: chatReducer.chats,
-});
-
-export default connect(mapStateToProps)(Router);
-
-function RouteApp({ chats }) {
-  const { chatId } = useParams();
-  if (chats.find((item) => item.id == chatId)) {
-    return <App chatId={chatId}></App>;
-  } else {
-    return <App chatId={1}></App>;
-  }
-}
-
-function RouteProfile() {
-  const { chatId } = useParams();
-  return <App chatId={chatId} showProfile={true}></App>;
-}
-
-function Router({ chats }) {
+export function Router() {
   return (
     <Switch>
       <Route exact path="/">
-        <RouteApp chats={chats} />
+        <RouteApp />
       </Route>
       <Route exact path="/chat/:chatId/">
-        <RouteApp chats={chats} />
+        <RouteApp />
       </Route>
       <Route exact path="/profile/:chatId/">
         <RouteProfile />
