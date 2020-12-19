@@ -6,15 +6,6 @@ import { changeMessage } from "../../actions/messageChange.js";
 import MessageContextMenu from "../messageContextMenu/MessageContextMenu.jsx";
 import "./messageStyle.sass";
 
-const mapStateToProps = ({ chatReducer }) => ({
-  messages: chatReducer.messages,
-});
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ changeMessage }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Message);
-
 function Message({
   userMessage: { name, content, id },
   changeMessage,
@@ -76,3 +67,12 @@ function Message({
     </div>
   );
 }
+
+const mapStateToProps = ({ chatReducer }) => ({
+  messages: chatReducer.messages,
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ changeMessage }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Message);

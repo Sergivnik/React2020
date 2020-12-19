@@ -4,15 +4,6 @@ import { bindActionCreators } from "redux";
 import connect from "react-redux/es/connect/connect";
 import { changeMessage } from "../../actions/messageChange.js";
 
-const mapStateToProps = ({ chatReducer }) => ({
-  messages: chatReducer.messages,
-});
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ changeMessage }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(MessageContextMenu);
-
 function MessageContextMenu({ id, name, content, onEdit, changeMessage }) {
   const handleClick = (event) => {
     let action;
@@ -44,3 +35,12 @@ function MessageContextMenu({ id, name, content, onEdit, changeMessage }) {
     </div>
   );
 }
+
+const mapStateToProps = ({ chatReducer }) => ({
+  messages: chatReducer.messages,
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ changeMessage }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessageContextMenu);

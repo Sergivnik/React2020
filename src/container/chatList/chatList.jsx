@@ -20,9 +20,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const mapStateToProps = ({ chatReducer }) => ({
-  chats: chatReducer.chats,
-});
+
 
 function ChatList({ onClickAdd, chats }) {
   const classes = useStyles();
@@ -51,5 +49,8 @@ function ChatList({ onClickAdd, chats }) {
     </div>
   );
 }
+const mapStateToProps = ({ chatReducer }) => ({
+  chats: chatReducer.chats,
+});
 
 export default connect(mapStateToProps)(ChatList);
