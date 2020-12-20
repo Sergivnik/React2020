@@ -7,7 +7,7 @@ import MessageBlock from "./container/messageBlock/MessageBlock.jsx";
 import AddUser from "./container/addUser/AddUser.jsx";
 import { Header } from "./container/header/Header.jsx";
 import { MessageList } from "./container/messageList/MessageList.jsx";
-import { Profile } from "./container/profile/Profile.jsx";
+import  Profile  from "./container/profile/Profile.jsx";
 import { sendMessage } from "./actions/messageActions.js";
 import "./appStyle.sass";
 

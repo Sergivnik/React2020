@@ -3,6 +3,7 @@ import { ADD_CHAT } from "../actions/chatActions";
 import { SEND_MESSAGE } from "../actions/messageActions";
 import { CHANGE_MESSAGE } from "../actions/messageChange.js";
 import { FIRE_CHAT } from "../actions/fire.js";
+import { DELETE_CHAT } from "../actions/chatDelete.js";
 
 const ROBOT = "Robot";
 const initialStore = {
@@ -74,6 +75,14 @@ export default function chatReducer(store = initialStore, action) {
         });
       }
       return { ...store, messages: [...arr] };
+    }
+    case DELETE_CHAT: {
+      let arrChat, arrMessage;
+      arrMessage = store.messages.filter(
+        (item) => item.chatNumber != action.id
+      );
+      arrChat = store.chats.filter((item) => item.id != action.id);
+      return { ...store, messages: [...arrMessage], chats: [...arrChat] };
     }
     default:
       return store;
