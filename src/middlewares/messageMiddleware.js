@@ -1,6 +1,7 @@
 import { sendMessage } from "../actions/messageActions.js";
+import { fireChat } from "../actions/fire.js";
 
-let timeOutId
+let timeOutId;
 export const sendMessageThunk = (messageId, text, sender, chatId) => {
   return (dispatch) => {
     dispatch(sendMessage(messageId, text, sender, chatId));
@@ -15,7 +16,11 @@ export const sendMessageThunk = (messageId, text, sender, chatId) => {
             chatId
           )
         );
+        dispatch(fireChat(true, chatId));
       }, 500);
+      setTimeout(() => {
+        dispatch(fireChat(false, chatId));
+      }, 5000);
     }
   };
 };

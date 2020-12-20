@@ -1,6 +1,5 @@
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
-import {history} from "../utils/store.js"
 import chatReducer from "./chatReducer.js";
 
 

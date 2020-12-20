@@ -2,6 +2,7 @@ import update from "react-addons-update";
 import { ADD_CHAT } from "../actions/chatActions";
 import { SEND_MESSAGE } from "../actions/messageActions";
 import { CHANGE_MESSAGE } from "../actions/messageChange.js";
+import { FIRE_CHAT } from "../actions/fire.js";
 
 const ROBOT = "Robot";
 const initialStore = {
@@ -16,6 +17,7 @@ const initialStore = {
     { name: ROBOT, content: "Как поживаешь?", id: 2, chatNumber: 1 },
   ],
   qiote: "",
+  fire: { fire: false, id: null },
 };
 
 export default function chatReducer(store = initialStore, action) {
@@ -43,6 +45,11 @@ export default function chatReducer(store = initialStore, action) {
             },
           },
         },
+      });
+    }
+    case FIRE_CHAT: {
+      return update(store, {
+        fire: { $set: { fire: action.fire, id: action.id } },
       });
     }
     case CHANGE_MESSAGE: {

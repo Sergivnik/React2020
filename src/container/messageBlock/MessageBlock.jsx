@@ -12,8 +12,7 @@ function MessageBlock({
   chats, // Список чатов
   messages, // Массив сообщений
   changeMessage, // Функция изменения сообщения
-  sendMessage, // Функция добавления сообщения в массив
-  sendMessageThunk,
+  sendMessageThunk, // Функция добавления сообщения в массив
 }) {
   const [text, setText] = useState("");
   const chatName = chats.find((item) => item.id == chatId).nameId;
