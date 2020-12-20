@@ -23,23 +23,23 @@ function App({ chatId, showProfile, chats, messages, sendMessage }) {
     setShowAddFormState(!showAddFormState);
   });
 
-  useEffect(() => {
-    const lastMessage = messages[messages.length - 1];
-    let timerID;
-    {
-      timerID = setTimeout(() => {
-        if (lastMessage.name != ROBOT) {
-          sendMessage(
-            messages[messages.length - 1].id + 1,
-            `Hello ${lastMessage.name}, I'm Robot`,
-            ROBOT,
-            chatId
-          );
-        }
-      }, 500);
-      return () => clearTimeout(timerID);
-    }
-  }, [messages, chatId]);
+  // useEffect(() => {
+  //   const lastMessage = messages[messages.length - 1];
+  //   let timerID;
+  //   {
+  //     timerID = setTimeout(() => {
+  //       if (lastMessage.name != ROBOT) {
+  //         sendMessage(
+  //           messages[messages.length - 1].id + 1,
+  //           `Hello ${lastMessage.name}, I'm Robot`,
+  //           ROBOT,
+  //           chatId
+  //         );
+  //       }
+  //     }, 500);
+  //     return () => clearTimeout(timerID);
+  //   }
+  // }, [messages, chatId]);
 
   return (
     <div className="layer">

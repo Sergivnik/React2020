@@ -1,3 +1,3 @@
-import messageMiddleware from "./messageMiddleware";
+import messageMiddleware from "./messageMiddleware.js";
 
 export default [messageMiddleware];

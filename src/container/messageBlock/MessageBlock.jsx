@@ -4,6 +4,7 @@ import connect from "react-redux/es/connect/connect";
 import { changeMessage } from "../../actions/messageChange.js";
 import { sendMessage } from "../../actions/messageActions.js";
 import "./messageBlock.sass";
+import { sendMessageThunk } from "../../middlewares/messageMiddleware";
 
 function MessageBlock({
   chatId, // номер чата
@@ -12,6 +13,7 @@ function MessageBlock({
   messages, // Массив сообщений
   changeMessage, // Функция изменения сообщения
   sendMessage, // Функция добавления сообщения в массив
+  sendMessageThunk,
 }) {
   const [text, setText] = useState("");
   const chatName = chats.find((item) => item.id == chatId).nameId;
@@ -21,7 +23,12 @@ function MessageBlock({
   const onSubmit = (event) => {
     event.preventDefault();
     setText("");
-    sendMessage(messages[messages.length - 1].id + 1, text, chatName, chatId);
+    sendMessageThunk(
+      messages[messages.length - 1].id + 1,
+      text,
+      chatName,
+      chatId
+    );
     changeMessage(null, "", "qiote");
   };
 
@@ -57,6 +64,9 @@ const mapStateToProps = ({ chatReducer }) => ({
   messages: chatReducer.messages,
 });
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ changeMessage, sendMessage }, dispatch);
+  bindActionCreators(
+    { changeMessage, sendMessage, sendMessageThunk },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageBlock);

@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import initReducers from "./../reducers";
-import middlewares from ".././middlewares";
+import thunk from "redux-thunk"
 
 function initStore() {
   const innitialStore = {};
@@ -9,7 +9,7 @@ function initStore() {
     initReducers,
     innitialStore,
     compose(
-      applyMiddleware(...middlewares),
+      applyMiddleware(thunk),
       window.__REDUX_DEVTOOLS_EXTENSION__
         ? window.__REDUX_DEVTOOLS_EXTENSION__()
         : () => {}
