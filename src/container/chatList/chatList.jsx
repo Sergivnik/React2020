@@ -3,14 +3,12 @@ import React from "react";
 import { bindActionCreators } from "redux";
 import connect from "react-redux/es/connect/connect";
 import { push } from "connected-react-router";
-import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import SendIcon from "@material-ui/icons/Send";
-import { fireChat } from "../../actions/fire.js";
 import "./chatListStyle.sass";
 
 const useStyles = makeStyles(() => ({
@@ -46,9 +44,12 @@ function ChatList({ onClickAdd, chats, push, fire }) {
               </ListItemIcon>
               <ListItemText primary={item.nameId} />
             </ListItem>
-            <Link to={`/profile/${item.id}`}>
-              <button className={"btnProfile"}>{item.nameId[0]}</button>
-            </Link>
+              <button
+                className={"btnProfile"}
+                onClick={() => handleNavigate(`/profile/${item.id}`)}
+              >
+                {item.nameId[0]}
+              </button>
           </div>
         ))}
       </List>
