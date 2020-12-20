@@ -1,5 +1,5 @@
 // App.jsx
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { bindActionCreators } from "redux";
 import connect from "react-redux/es/connect/connect";
 import ChatList from "./container/chatList/chatList.jsx";
@@ -13,7 +13,7 @@ import "./appStyle.sass";
 
 const ROBOT = "Robot";
 
-function App({ chatId, showProfile, chats, messages, sendMessage }) {
+function App({ chatId, showProfile, chats, messages }) {
   const [showAddFormState, setShowAddFormState] = useState(false);
   const chatName = useMemo(
     () => chats.find((item) => item.id == chatId).nameId
@@ -22,24 +22,6 @@ function App({ chatId, showProfile, chats, messages, sendMessage }) {
   const handleClickAdd = useCallback(() => {
     setShowAddFormState(!showAddFormState);
   });
-
-  // useEffect(() => {
-  //   const lastMessage = messages[messages.length - 1];
-  //   let timerID;
-  //   {
-  //     timerID = setTimeout(() => {
-  //       if (lastMessage.name != ROBOT) {
-  //         sendMessage(
-  //           messages[messages.length - 1].id + 1,
-  //           `Hello ${lastMessage.name}, I'm Robot`,
-  //           ROBOT,
-  //           chatId
-  //         );
-  //       }
-  //     }, 500);
-  //     return () => clearTimeout(timerID);
-  //   }
-  // }, [messages, chatId]);
 
   return (
     <div className="layer">

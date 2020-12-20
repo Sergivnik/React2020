@@ -1,6 +1,8 @@
 // ChatList.jsx
 import React from "react";
+import { bindActionCreators } from "redux";
 import connect from "react-redux/es/connect/connect";
+import { push } from "connected-react-router";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -8,6 +10,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import SendIcon from "@material-ui/icons/Send";
+import { fireChat } from "../../actions/fire.js";
 import "./chatListStyle.sass";
 
 const useStyles = makeStyles(() => ({
@@ -20,23 +23,29 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-
-
-function ChatList({ onClickAdd, chats }) {
+function ChatList({ onClickAdd, chats, push, fire }) {
   const classes = useStyles();
+  console.log(fire);
+  const handleNavigate = (link) => {
+    push(link);
+  };
+
   return (
     <div className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
         {chats.map((item) => (
-          <div key={item.id} className={"LinkBtn"}>
-            <Link to={`/chat/${item.id}`}>
-              <ListItem button>
-                <ListItemIcon>
-                  <SendIcon />
-                </ListItemIcon>
-                <ListItemText primary={item.nameId} />
-              </ListItem>
-            </Link>
+          <div
+            key={item.id}
+            className={
+              fire.fire && item.id == fire.id ? "LinkBtn fire" : "LinkBtn"
+            }
+          >
+            <ListItem button onClick={() => handleNavigate(`/chat/${item.id}`)}>
+              <ListItemIcon>
+                <SendIcon />
+              </ListItemIcon>
+              <ListItemText primary={item.nameId} />
+            </ListItem>
             <Link to={`/profile/${item.id}`}>
               <button className={"btnProfile"}>{item.nameId[0]}</button>
             </Link>
@@ -51,6 +60,9 @@ function ChatList({ onClickAdd, chats }) {
 }
 const mapStateToProps = ({ chatReducer }) => ({
   chats: chatReducer.chats,
+  fire: chatReducer.fire,
 });
 
-export default connect(mapStateToProps)(ChatList);
+const mapDispatchToProps = (dispatch) => bindActionCreators({ push }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatList);
