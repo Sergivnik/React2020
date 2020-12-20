@@ -14,6 +14,7 @@ function RouteApp({ chats }) {
   if (chats.find((item) => item.id == chatId)) {
     return <App chatId={chatId}></App>;
   } else {
-    return <Redirect to={"/chat/1/"} />;
+    const anyId = chats[0].id;
+    return <App chatId={anyId}></App>;
   }
 }
