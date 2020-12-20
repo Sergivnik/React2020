@@ -1,9 +1,8 @@
 import { combineReducers } from "redux";
-import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
+import {history} from "../utils/store.js"
 import chatReducer from "./chatReducer.js";
 
-export const history = createBrowserHistory();
 
 export default (history) =>
   combineReducers({
