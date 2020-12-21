@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { bindActionCreators } from "redux";
 import connect from "react-redux/es/connect/connect";
 import { changeMessage } from "../../actions/messageChange.js";
@@ -15,19 +15,24 @@ function MessageBlock({
   sendMessageThunk, // Функция добавления сообщения в массив
 }) {
   const [text, setText] = useState("");
-  const chatName = chats.find((item) => item.id == chatId).nameId;
+  let chatName
+    if (chatId) {
+      chatName=chats.find((item) => item.id == chatId).nameId;
+    } else {
+      chatName = "";
+    }
+  ;
 
   const getText = (event) => setText(event.currentTarget.value);
 
   const onSubmit = (event) => {
     event.preventDefault();
     setText("");
-    sendMessageThunk(
-      messages[messages.length - 1].id + 1,
-      text,
-      chatName,
-      chatId
-    );
+    let id;
+    if (messages.length) {
+      id = messages[messages.length - 1].id + 1;
+    } else id = 1;
+    sendMessageThunk(id, text, chatName, chatId);
     changeMessage(null, "", "qiote");
   };
 

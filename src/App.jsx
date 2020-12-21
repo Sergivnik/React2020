@@ -7,7 +7,7 @@ import MessageBlock from "./container/messageBlock/MessageBlock.jsx";
 import AddUser from "./container/addUser/AddUser.jsx";
 import { Header } from "./container/header/Header.jsx";
 import { MessageList } from "./container/messageList/MessageList.jsx";
-import  Profile  from "./container/profile/Profile.jsx";
+import Profile from "./container/profile/Profile.jsx";
 import { sendMessage } from "./actions/messageActions.js";
 import "./appStyle.sass";
 
@@ -15,9 +15,11 @@ const ROBOT = "Robot";
 
 function App({ chatId, showProfile, chats, messages }) {
   const [showAddFormState, setShowAddFormState] = useState(false);
-  const chatName = useMemo(
-    () => chats.find((item) => item.id == chatId).nameId
-  );
+  const chatName = useMemo(() => {
+    if (chatId) {
+      chats.find((item) => item.id == chatId).nameId;
+    } else "";
+  });
 
   const handleClickAdd = useCallback(() => {
     setShowAddFormState(!showAddFormState);
