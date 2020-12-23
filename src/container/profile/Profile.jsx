@@ -1,13 +1,13 @@
 // Profile.jsx
 import React from "react";
-import { bindActionCreators } from "redux";
-import connect from "react-redux/es/connect/connect";
 import { Link } from "react-router-dom";
 import { deleteChat } from "../../actions/chatDelete.js";
 import "./profileStyle.sass";
+import { useDispatch } from "react-redux";
 
-function Profile({ chatId, listChat, chatName, deleteChat }) {
-  const handleClick = () => deleteChat(chatId);
+export function Profile({ chatId, listChat, chatName }) {
+  const dispatch = useDispatch();
+  const handleClick = () => dispatch(deleteChat(chatId));
   return (
     <div className="profileDiv">
       <div className="profileHeader">
@@ -32,12 +32,4 @@ function Profile({ chatId, listChat, chatName, deleteChat }) {
     </div>
   );
 }
-const mapStateToProps = ({ chatReducer }) => ({
-  qiote: chatReducer.qiote,
-  chats: chatReducer.chats,
-  messages: chatReducer.messages,
-});
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ deleteChat }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);

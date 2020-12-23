@@ -1,19 +1,18 @@
 // App.jsx
 import React, { useCallback, useMemo, useState } from "react";
-import { bindActionCreators } from "redux";
-import connect from "react-redux/es/connect/connect";
-import ChatList from "./container/chatList/chatList.jsx";
-import MessageBlock from "./container/messageBlock/MessageBlock.jsx";
-import AddUser from "./container/addUser/AddUser.jsx";
+import { ChatList } from "./container/chatList/chatList.jsx";
+import { MessageBlock } from "./container/messageBlock/MessageBlock.jsx";
+import { AddUser } from "./container/addUser/AddUser.jsx";
 import { Header } from "./container/header/Header.jsx";
 import { MessageList } from "./container/messageList/MessageList.jsx";
-import Profile from "./container/profile/Profile.jsx";
-import { sendMessage } from "./actions/messageActions.js";
+import { Profile } from "./container/profile/Profile.jsx";
 import "./appStyle.sass";
+import { useSelector } from "react-redux";
 
-const ROBOT = "Robot";
+export function App({ chatId, showProfile }) {
+  const chats = useSelector(({ chatReducer }) => chatReducer.chats);
+  const messages = useSelector(({ chatReducer }) => chatReducer.messages);
 
-function App({ chatId, showProfile, chats, messages }) {
   const [showAddFormState, setShowAddFormState] = useState(false);
   const chatName = useMemo(() => {
     if (chatId) {
@@ -40,13 +39,3 @@ function App({ chatId, showProfile, chats, messages }) {
     </div>
   );
 }
-
-const mapStateToProps = ({ chatReducer }) => ({
-  chats: chatReducer.chats,
-  messages: chatReducer.messages,
-});
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ sendMessage }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);

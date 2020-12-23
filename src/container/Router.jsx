@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import RouteApp from "../container/Router/RouteApp.js";
-import RouteProfile from "../container/Router/RouteProfile.js";
+import { RouteApp } from "../container/Router/RouteApp.js";
+import { RouteProfile } from "../container/Router/RouteProfile.js";
 
 export function Router() {
   return (

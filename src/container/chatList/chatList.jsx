@@ -1,7 +1,5 @@
 // ChatList.jsx
 import React from "react";
-import { bindActionCreators } from "redux";
-import connect from "react-redux/es/connect/connect";
 import { push } from "connected-react-router";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -10,6 +8,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import SendIcon from "@material-ui/icons/Send";
 import "./chatListStyle.sass";
+import { useSelector, useDispatch } from "react-redux";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -21,11 +20,14 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function ChatList({ onClickAdd, chats, push, fire }) {
+export function ChatList({ onClickAdd }) {
   const classes = useStyles();
+  const chats = useSelector(({ chatReducer }) => chatReducer.chats);
+  const fire = useSelector(({ chatReducer }) => chatReducer.fire);
+  const dispatch = useDispatch();
   
   const handleNavigate = (link) => {
-    push(link);
+    dispatch(push(link));
   };
 
   return (
@@ -59,11 +61,3 @@ function ChatList({ onClickAdd, chats, push, fire }) {
     </div>
   );
 }
-const mapStateToProps = ({ chatReducer }) => ({
-  chats: chatReducer.chats,
-  fire: chatReducer.fire,
-});
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({ push }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(ChatList);

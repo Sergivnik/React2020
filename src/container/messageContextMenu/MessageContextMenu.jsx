@@ -1,15 +1,15 @@
 // MessageContextMenu.jsx
 import React from "react";
-import { bindActionCreators } from "redux";
-import connect from "react-redux/es/connect/connect";
 import { changeMessage } from "../../actions/messageChange.js";
+import { useDispatch } from "react-redux";
 
-function MessageContextMenu({ id, name, content, onEdit, changeMessage }) {
+export function MessageContextMenu({ id, name, content, onEdit }) {
+  const dispatch = useDispatch();
   const handleClick = (event) => {
     let action;
     if (event.currentTarget.dataset.id == "btn-1") action = "qiote";
     if (event.currentTarget.dataset.id == "btn-3") action = "delete";
-    changeMessage(id, content, action);
+    dispatch(changeMessage(id, content, action));
   };
   const handleClickEdit = () => {
     onEdit();
@@ -35,12 +35,3 @@ function MessageContextMenu({ id, name, content, onEdit, changeMessage }) {
     </div>
   );
 }
-
-const mapStateToProps = ({ chatReducer }) => ({
-  messages: chatReducer.messages,
-});
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ changeMessage }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(MessageContextMenu);

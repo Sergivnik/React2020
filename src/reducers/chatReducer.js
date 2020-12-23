@@ -8,7 +8,7 @@ import { DELETE_CHAT } from "../actions/chatDelete.js";
 const ROBOT = "Robot";
 const initialStore = {
   chats: [
-    { id: 1, nameId: "ФедорРРР", age: 54 },
+    { id: 1, nameId: "Федор", age: 54 },
     { id: 2, nameId: "Петро", age: 82 },
     { id: 3, nameId: "Оксана", age: 18 },
     { id: 4, nameId: "Вальдемар", age: 27 },
@@ -24,7 +24,7 @@ const initialStore = {
 export default function chatReducer(store = initialStore, action) {
   switch (action.type) {
     case ADD_CHAT: {
-      const id = Object.keys(store.chats).length + 1;
+      const id = store.chats.length + 1;
       return update(store, {
         chats: {
           $merge: {
@@ -34,7 +34,7 @@ export default function chatReducer(store = initialStore, action) {
       });
     }
     case SEND_MESSAGE: {
-      const id = Object.keys(store.messages).length + 1;
+      const id = store.messages.length + 1;
       return update(store, {
         messages: {
           $merge: {

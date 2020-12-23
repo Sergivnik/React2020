@@ -1,15 +1,10 @@
 import React from "react";
 import { useParams, Redirect } from "react-router-dom";
-import connect from "react-redux/es/connect/connect";
-import App from "../../App.jsx";
+import {App} from "../../App.jsx";
+import { useSelector } from "react-redux";
 
-const mapStateToProps = ({ chatReducer }) => ({
-  chats: chatReducer.chats,
-});
-
-export default connect(mapStateToProps)(RouteProfile);
-
-function RouteProfile({ chats }) {
+export function RouteProfile() {
+  const chats = useSelector(({ chatReducer }) => chatReducer.chats);
   const { chatId } = useParams();
   if (chats.find((item) => item.id == chatId)) {
     return <App chatId={chatId} showProfile={true}></App>;

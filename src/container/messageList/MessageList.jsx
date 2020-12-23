@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import Message from "../message/Message.jsx";
+import { Message } from "../message/Message.jsx";
 import "./messageListStyle.sass";
 
 export function MessageList({ messagesList, onDelMessage, chatId }) {

@@ -1,28 +1,23 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { bindActionCreators } from "redux";
-import connect from "react-redux/es/connect/connect";
 import { changeMessage } from "../../actions/messageChange.js";
-import { sendMessage } from "../../actions/messageActions.js";
 import "./messageBlock.sass";
 import { sendMessageThunk } from "../../middlewares/messageMiddleware";
+import { useSelector, useDispatch } from "react-redux";
 
-function MessageBlock({
-  chatId, // номер чата
-  qiote, // Цитата сообщения
-  chats, // Список чатов
-  messages, // Массив сообщений
-  changeMessage, // Функция изменения сообщения
-  sendMessageThunk, // Функция добавления сообщения в массив
-}) {
+
+export function MessageBlock({ chatId }) {
+  const chats = useSelector(({ chatReducer }) => chatReducer.chats);
+  const qiote = useSelector(({ chatReducer }) => chatReducer.qiote);
+  const messages = useSelector(({ chatReducer }) => chatReducer.messages);
+  const dispatch = useDispatch();
+
   const [text, setText] = useState("");
-  let chatName
-    if (chatId) {
-      chatName=chats.find((item) => item.id == chatId).nameId;
-    } else {
-      chatName = "";
-    }
-  ;
-
+  let chatName;
+  if (chatId) {
+    chatName = chats.find((item) => item.id == chatId).nameId;
+  } else {
+    chatName = "";
+  }
   const getText = (event) => setText(event.currentTarget.value);
 
   const onSubmit = (event) => {
@@ -32,8 +27,8 @@ function MessageBlock({
     if (messages.length) {
       id = messages[messages.length - 1].id + 1;
     } else id = 1;
-    sendMessageThunk(id, text, chatName, chatId);
-    changeMessage(null, "", "qiote");
+    dispatch(sendMessageThunk(id, text, chatName, chatId));
+    dispatch(changeMessage(null, "", "qiote"));
   };
 
   const handleKeyUp = (event) => {
@@ -61,16 +56,3 @@ function MessageBlock({
     </form>
   );
 }
-
-const mapStateToProps = ({ chatReducer }) => ({
-  qiote: chatReducer.qiote,
-  chats: chatReducer.chats,
-  messages: chatReducer.messages,
-});
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-    { changeMessage, sendMessage, sendMessageThunk },
-    dispatch
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(MessageBlock);

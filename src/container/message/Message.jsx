@@ -1,16 +1,12 @@
 // Message.jsx
 import React, { useState, useRef, useEffect } from "react";
-import { bindActionCreators } from "redux";
-import connect from "react-redux/es/connect/connect";
 import { changeMessage } from "../../actions/messageChange.js";
-import MessageContextMenu from "../messageContextMenu/MessageContextMenu.jsx";
+import {MessageContextMenu} from "../messageContextMenu/MessageContextMenu.jsx";
 import "./messageStyle.sass";
+import { useDispatch } from "react-redux";
 
-function Message({
-  userMessage: { name, content, id },
-  changeMessage,
-  onDelMessage,
-}) {
+export function Message({ userMessage: { name, content, id }, onDelMessage }) {
+  const dispatch = useDispatch();
   const myRef = useRef(null);
   const [showMenu, setShowMenu] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
@@ -24,7 +20,7 @@ function Message({
   const getContent = (event) => setText(event.currentTarget.value);
   const handleKeyUp = (event) => {
     if (event.keyCode == 13) {
-      changeMessage(id, text, "edit");
+      dispatch(changeMessage(id, text, "edit"));
       setShowEdit(false);
     }
   };
@@ -67,12 +63,3 @@ function Message({
     </div>
   );
 }
-
-const mapStateToProps = ({ chatReducer }) => ({
-  messages: chatReducer.messages,
-});
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ changeMessage }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Message);

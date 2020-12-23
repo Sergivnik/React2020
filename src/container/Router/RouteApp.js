@@ -1,15 +1,10 @@
 import React from "react";
 import { useParams, Redirect } from "react-router-dom";
-import connect from "react-redux/es/connect/connect";
-import App from "../../App.jsx";
+import {App} from "../../App.jsx";
+import { useSelector } from "react-redux";
 
-const mapStateToProps = ({ chatReducer }) => ({
-  chats: chatReducer.chats,
-});
-
-export default connect(mapStateToProps)(RouteApp);
-
-function RouteApp({ chats }) {
+export function RouteApp() {
+  const chats = useSelector(({ chatReducer }) => chatReducer.chats);
   const { chatId } = useParams();
   if (chats.length > 0) {// костыль на случай удаления всех чатов
     if (chats.find((item) => item.id == chatId)) {
