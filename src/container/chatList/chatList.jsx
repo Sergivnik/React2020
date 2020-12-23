@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
 
 function ChatList({ onClickAdd, chats, push, fire }) {
   const classes = useStyles();
-  console.log(fire);
+  
   const handleNavigate = (link) => {
     push(link);
   };

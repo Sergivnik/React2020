@@ -11,12 +11,12 @@ export default connect(mapStateToProps)(RouteApp);
 
 function RouteApp({ chats }) {
   const { chatId } = useParams();
-  if (chats.length > 0) {
+  if (chats.length > 0) {// костыль на случай удаления всех чатов
     if (chats.find((item) => item.id == chatId)) {
       return <App chatId={chatId}></App>;
     } else {
       const anyId = chats[0].id;
-      return <App chatId={anyId}></App>;
+      return <Redirect to={`/chat/${anyId}/`} />;
     }
   } else return <App chatId={0}></App>;
 }

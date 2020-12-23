@@ -17,13 +17,13 @@ function App({ chatId, showProfile, chats, messages }) {
   const [showAddFormState, setShowAddFormState] = useState(false);
   const chatName = useMemo(() => {
     if (chatId) {
-      chats.find((item) => item.id == chatId).nameId;
-    } else "";
-  });
+      return chats.find((item) => item.id == chatId).nameId;
+    } else return "";
+  }, [chatId]);
 
   const handleClickAdd = useCallback(() => {
     setShowAddFormState(!showAddFormState);
-  });
+  }, [showAddFormState]);
 
   return (
     <div className="layer">

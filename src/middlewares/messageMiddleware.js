@@ -17,7 +17,7 @@ export const sendMessageThunk = (messageId, text, sender, chatId) => {
           )
         );
         dispatch(fireChat(true, chatId));
-      }, 500);
+      }, 1000);
       setTimeout(() => {
         dispatch(fireChat(false, chatId));
       }, 3500);
