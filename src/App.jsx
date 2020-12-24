@@ -1,5 +1,5 @@
 // App.jsx
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { ChatList } from "./container/chatList/chatList.jsx";
 import { MessageBlock } from "./container/messageBlock/MessageBlock.jsx";
 import { AddUser } from "./container/addUser/AddUser.jsx";
@@ -7,11 +7,18 @@ import { Header } from "./container/header/Header.jsx";
 import { MessageList } from "./container/messageList/MessageList.jsx";
 import { Profile } from "./container/profile/Profile.jsx";
 import "./appStyle.sass";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getData } from "./actions/getDataInitial.js";
 
 export function App({ chatId, showProfile }) {
   const chats = useSelector(({ chatReducer }) => chatReducer.chats);
   const messages = useSelector(({ chatReducer }) => chatReducer.messages);
+  const request = useSelector(({ chatReducer }) => chatReducer.request);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getData());
+  }, [dispatch]);
 
   const [showAddFormState, setShowAddFormState] = useState(false);
   const chatName = useMemo(() => {

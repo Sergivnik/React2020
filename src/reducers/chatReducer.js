@@ -4,21 +4,21 @@ import { SEND_MESSAGE } from "../actions/messageActions";
 import { CHANGE_MESSAGE } from "../actions/messageChange.js";
 import { FIRE_CHAT } from "../actions/fire.js";
 import { DELETE_CHAT } from "../actions/chatDelete.js";
+import {
+  GET_DATA_SUCCESS,
+  GET_DATA_REQUEST,
+  GET_DATA_FAILURE,
+} from "../actions/getDataInitial.js";
 
-const ROBOT = "Robot";
 const initialStore = {
-  chats: [
-    { id: 1, nameId: "Федор", age: 54 },
-    { id: 2, nameId: "Петро", age: 82 },
-    { id: 3, nameId: "Оксана", age: 18 },
-    { id: 4, nameId: "Вальдемар", age: 27 },
-  ],
-  messages: [
-    { name: ROBOT, content: "Привет", id: 1, chatNumber: 1 },
-    { name: ROBOT, content: "Как поживаешь?", id: 2, chatNumber: 1 },
-  ],
+  chats: [],
+  messages: [],
   qiote: "",
   fire: { fire: false, id: null },
+  request: {
+    status: "IDLE",
+    error: null,
+  },
 };
 
 export default function chatReducer(store = initialStore, action) {
@@ -83,6 +83,36 @@ export default function chatReducer(store = initialStore, action) {
       );
       arrChat = store.chats.filter((item) => item.id != action.id);
       return { ...store, messages: [...arrMessage], chats: [...arrChat] };
+    }
+    case GET_DATA_SUCCESS: {
+      console.log(action.dataServer.chats);
+      return {
+        ...store,
+        chats: action.dataServer.chats,
+        messages: action.dataServer.messages,
+        request: {
+          status: "SUCCESS",
+          error: null,
+        },
+      };
+    }
+    case GET_DATA_FAILURE: {
+      return {
+        ...store,
+        request: {
+          status: "FAILURE",
+          error: true,
+        },
+      };
+    }
+    case GET_DATA_REQUEST: {
+      return {
+        ...store,
+        request: {
+          status: "LOADING",
+          error: null,
+        },
+      };
     }
     default:
       return store;
