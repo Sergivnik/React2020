@@ -8,7 +8,7 @@ import { MessageList } from "./container/messageList/MessageList.jsx";
 import { Profile } from "./container/profile/Profile.jsx";
 import "./appStyle.sass";
 import { useSelector, useDispatch } from "react-redux";
-import { getData } from "./actions/getDataInitial.js";
+import { getData } from "./middlewares/getDataInitial.js";
 
 export function App({ chatId, showProfile }) {
   const chats = useSelector(({ chatReducer }) => chatReducer.chats);
