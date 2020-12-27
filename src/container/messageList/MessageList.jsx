@@ -10,11 +10,13 @@ export function MessageList({ messagesList, onDelMessage, chatId }) {
   console.log(messagesList);
   return (
     <div ref={myRef} className="messageListDiv">
-      {Object.keys(messagesList).forEach(
+      {Object.keys(messagesList).map(
         (keyItem) =>
           messagesList[keyItem].chatNumber == chatId && (
             <Message
-              userMessage={messagesList[keyItem]}
+              name={messagesList[keyItem].name}
+              content={messagesList[keyItem].content}
+              id={messagesList[keyItem].id}
               key={keyItem}
               onDelMessage={onDelMessage}
             />

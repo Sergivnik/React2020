@@ -1,11 +1,11 @@
 // Message.jsx
 import React, { useState, useRef, useEffect } from "react";
 import { changeMessage } from "../../actions/messageChange.js";
-import {MessageContextMenu} from "../messageContextMenu/MessageContextMenu.jsx";
+import { MessageContextMenu } from "../messageContextMenu/MessageContextMenu.jsx";
 import "./messageStyle.sass";
 import { useDispatch } from "react-redux";
 
-export function Message({ userMessage: { name, content, id }, onDelMessage }) {
+export function Message({ name, content, id, onDelMessage }) {
   const dispatch = useDispatch();
   const myRef = useRef(null);
   const [showMenu, setShowMenu] = useState(false);
