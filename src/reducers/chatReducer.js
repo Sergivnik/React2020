@@ -12,7 +12,7 @@ import {
 
 const initialStore = {
   chats: [],
-  messages: [],
+  messages: {},
   qiote: "",
   fire: { fire: false, id: null },
   request: {
@@ -85,7 +85,6 @@ export default function chatReducer(store = initialStore, action) {
       return { ...store, messages: [...arrMessage], chats: [...arrChat] };
     }
     case GET_DATA_SUCCESS: {
-      console.log(action.dataServer.chats);
       return {
         ...store,
         chats: action.dataServer.chats,

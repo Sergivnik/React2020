@@ -6,8 +6,13 @@
     { "id": 4, "nameId": "Вальдемар", "age": 27 },
     { "id": 5, "nameId": "Оксана", "age": 18 }
   ],
-  "messages": [
-    { "name": "Robot", "content": "Привеет", "id": 1, "chatNumber": 1 },
-    { "name": "Robot", "content": "Как поживаешь?", "id": 2, "chatNumber": 1 }
-  ]
+  "messages": {
+    "g0": { "name": "Robot", "content": "Привеет", "id": 1, "chatNumber": 1 },
+    "g1": {
+      "name": "Robot",
+      "content": "Как поживаешь?",
+      "id": 2,
+      "chatNumber": 1
+    }
+  }
 }

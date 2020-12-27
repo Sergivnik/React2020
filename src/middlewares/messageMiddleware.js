@@ -1,9 +1,20 @@
 import { sendMessage } from "../actions/messageActions.js";
 import { fireChat } from "../actions/fire.js";
+import { db } from "../services/firebase.js";
 
 let timeOutId;
 export const sendMessageThunk = (messageId, text, sender, chatId) => {
   return (dispatch) => {
+    const newmessage = db.ref("messages").push();
+    newmessage.update({
+      2: {
+        chatNumber: chatId,
+        content: text,
+        id: messageId,
+        name: sender,
+      },
+    });
+
     dispatch(sendMessage(messageId, text, sender, chatId));
     if (sender != "Robot") {
       clearTimeout(timeOutId);
