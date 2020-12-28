@@ -6,6 +6,7 @@ import { AddUser } from "./container/addUser/AddUser.jsx";
 import { Header } from "./container/header/Header.jsx";
 import { MessageList } from "./container/messageList/MessageList.jsx";
 import { Profile } from "./container/profile/Profile.jsx";
+import { Login } from "./container/login/login.jsx";
 import "./appStyle.sass";
 import { useSelector, useDispatch } from "react-redux";
 import { getData } from "./middlewares/getDataInitial.js";
@@ -13,14 +14,14 @@ import { getData } from "./middlewares/getDataInitial.js";
 export function App({ chatId, showProfile }) {
   const chats = useSelector(({ chatReducer }) => chatReducer.chats);
   const messages = useSelector(({ chatReducer }) => chatReducer.messages);
-  const request = useSelector(({ chatReducer }) => chatReducer.request);
   const dispatch = useDispatch();
+  const [showAddFormState, setShowAddFormState] = useState(false);
+  const [sign, setSign] = useState(false);
 
   useEffect(() => {
     dispatch(getData());
   }, [dispatch]);
 
-  const [showAddFormState, setShowAddFormState] = useState(false);
   const chatName = useMemo(() => {
     if (chatId) {
       return chats.find((item) => item.id == chatId).nameId;
@@ -31,18 +32,24 @@ export function App({ chatId, showProfile }) {
     setShowAddFormState(!showAddFormState);
   }, [showAddFormState]);
 
-  return (
-    <div className="layer">
-      <Header chatName={chatName} />
-      <ChatList onClickAdd={handleClickAdd} />
-      <div className="messageListBlock">
-        {showProfile && (
-          <Profile chatId={chatId} listChat={chats} chatName={chatName} />
-        )}
-        <MessageList messagesList={messages} chatId={chatId}></MessageList>
-        <MessageBlock chatId={chatId} />
+  const handleGetSign = (s) => {
+    setSign(s);
+  };
+
+  if (sign === false) return <Login getSign={handleGetSign} />;
+  else
+    return (
+      <div className="layer">
+        <Header chatName={chatName} />
+        <ChatList onClickAdd={handleClickAdd} />
+        <div className="messageListBlock">
+          {showProfile && (
+            <Profile chatId={chatId} listChat={chats} chatName={chatName} />
+          )}
+          <MessageList messagesList={messages} chatId={chatId}></MessageList>
+          <MessageBlock chatId={chatId} />
+        </div>
+        {showAddFormState && <AddUser onCanselAddUser={handleClickAdd} />}
       </div>
-      {showAddFormState && <AddUser onCanselAddUser={handleClickAdd} />}
-    </div>
-  );
+    );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { changeMessage } from "../../actions/messageChange.js";
 import "./messageBlock.sass";
 import { sendMessageThunk } from "../../middlewares/messageMiddleware";
