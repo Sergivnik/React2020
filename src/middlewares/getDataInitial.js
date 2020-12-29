@@ -23,7 +23,7 @@ export const getData = () => {
   return (dispatch) => {
     dispatch(getDataRequest());
     try {
-      db.ref().on("value", (snapshot) => {
+      db.ref().once("value", (snapshot) => {
         const data = snapshot.val();
         dispatch(getDataSuccess(data));
       });

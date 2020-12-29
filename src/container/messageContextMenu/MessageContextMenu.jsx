@@ -1,6 +1,6 @@
 // MessageContextMenu.jsx
 import React from "react";
-import { changeMessage } from "../../actions/messageChange.js";
+import { changeMessageThunk } from "../../middlewares/messageMiddleware.js";
 import { useDispatch } from "react-redux";
 
 export function MessageContextMenu({ id, name, content, onEdit }) {
@@ -9,7 +9,7 @@ export function MessageContextMenu({ id, name, content, onEdit }) {
     let action;
     if (event.currentTarget.dataset.id == "btn-1") action = "qiote";
     if (event.currentTarget.dataset.id == "btn-3") action = "delete";
-    dispatch(changeMessage(id, content, action));
+    dispatch(changeMessageThunk(id, content, action));
   };
   const handleClickEdit = () => {
     onEdit();

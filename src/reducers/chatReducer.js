@@ -34,14 +34,13 @@ export default function chatReducer(store = initialStore, action) {
       });
     }
     case SEND_MESSAGE: {
-      const id = store.messages.length + 1;
       return update(store, {
         messages: {
           $merge: {
-            [id - 1]: {
+            [action.keyMessage]: {
               name: action.sender,
               content: action.text,
-              id: id,
+              id: action.keyMessage,
               chatNumber: action.chatId,
             },
           },
@@ -54,27 +53,35 @@ export default function chatReducer(store = initialStore, action) {
       });
     }
     case CHANGE_MESSAGE: {
-      let arr;
+      let arr = {};
       let textQiote;
       if (action.typeOfChange == "qiote") {
         textQiote = action.text;
         return { ...store, qiote: textQiote };
       }
       if (action.typeOfChange == "delete") {
-        arr = store.messages.filter((item) => item.id !== action.messageId);
-        return { ...store, messages: [...arr] };
-      }
-      if (action.typeOfChange == "edit") {
-        arr = store.messages.map((item) => {
-          if (item.id !== action.messageId) {
-            return item;
-          } else {
-            item.content = action.text;
-            return item;
+        Object.keys(store.messages).forEach((element) => {
+          if (element != action.messageId) {
+            arr[element] = store.messages[element];
           }
         });
+        return update(store, {
+          messages: { $set: arr },
+        });
       }
-      return { ...store, messages: [...arr] };
+      if (action.typeOfChange == "edit") {
+        Object.keys(store.messages).forEach((element) => {
+          if (element != action.messageId) {
+            arr[element] = store.messages[element];
+          } else {
+            arr[element] = store.messages[element];
+            arr[element].content = action.text;
+          }
+        });
+        return update(store, {
+          messages: { $set: arr },
+        });
+      }
     }
     case DELETE_CHAT: {
       let arrChat, arrMessage;

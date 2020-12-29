@@ -16,7 +16,7 @@ export function App({ chatId, showProfile }) {
   const messages = useSelector(({ chatReducer }) => chatReducer.messages);
   const dispatch = useDispatch();
   const [showAddFormState, setShowAddFormState] = useState(false);
-  const [sign, setSign] = useState(false);
+  const [sign, setSign] = useState(true);
 
   useEffect(() => {
     dispatch(getData());
@@ -32,8 +32,8 @@ export function App({ chatId, showProfile }) {
     setShowAddFormState(!showAddFormState);
   }, [showAddFormState]);
 
-  const handleGetSign = (s) => {
-    setSign(s);
+  const handleGetSign = (sing) => {
+    setSign(sing);
   };
 
   if (sign === false) return <Login getSign={handleGetSign} />;

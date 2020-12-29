@@ -1,6 +1,6 @@
 // Message.jsx
 import React, { useState, useRef, useEffect } from "react";
-import { changeMessage } from "../../actions/messageChange.js";
+import { changeMessageThunk } from "../../middlewares/messageMiddleware.js";
 import { MessageContextMenu } from "../messageContextMenu/MessageContextMenu.jsx";
 import "./messageStyle.sass";
 import { useDispatch } from "react-redux";
@@ -20,7 +20,7 @@ export function Message({ name, content, id, onDelMessage }) {
   const getContent = (event) => setText(event.currentTarget.value);
   const handleKeyUp = (event) => {
     if (event.keyCode == 13) {
-      dispatch(changeMessage(id, text, "edit"));
+      dispatch(changeMessageThunk(id, text, "edit"));
       setShowEdit(false);
     }
   };

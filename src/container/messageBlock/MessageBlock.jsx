@@ -27,7 +27,7 @@ export function MessageBlock({ chatId }) {
     if (messages.length) {
       id = messages[messages.length - 1].id + 1;
     } else id = 1;
-    dispatch(sendMessageThunk(id, text, chatName, chatId));
+    dispatch(sendMessageThunk(null, text, chatName, chatId));
     dispatch(changeMessage(null, "", "qiote"));
   };
 

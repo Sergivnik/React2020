@@ -16,7 +16,7 @@ export function MessageList({ messagesList, onDelMessage, chatId }) {
             <Message
               name={messagesList[keyItem].name}
               content={messagesList[keyItem].content}
-              id={messagesList[keyItem].id}
+              id={keyItem}
               key={keyItem}
               onDelMessage={onDelMessage}
             />

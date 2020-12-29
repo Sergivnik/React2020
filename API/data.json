@@ -7,11 +7,11 @@
     { "id": 5, "nameId": "Оксана", "age": 18 }
   ],
   "messages": {
-    "0": { "name": "Robot", "content": "Привеет", "id": 1, "chatNumber": 1 },
-    "1": {
+    "-MPhIRIQGjR_M75gHm-2": { "name": "Robot", "content": "Привеет", "chatNumber": 1 },
+    "-MPhIRY6928sAFArSD7p": {
       "name": "Robot",
       "content": "Как поживаешь?",
-      "id": 2,
+
       "chatNumber": 1
     }
   }
