@@ -24,7 +24,8 @@ export function App({ chatId, showProfile }) {
 
   const chatName = useMemo(() => {
     if (chatId) {
-      return chats.find((item) => item.id == chatId).nameId;
+      return Object.values(chats).find((item) => item.id == chatId)
+        .nameId;
     } else return "";
   }, [chatId]);
 

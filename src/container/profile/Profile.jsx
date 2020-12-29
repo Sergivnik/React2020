@@ -1,13 +1,13 @@
 // Profile.jsx
 import React from "react";
 import { Link } from "react-router-dom";
-import { deleteChat } from "../../actions/chatDelete.js";
+import { deleteChatThunk } from "../../middlewares/chatMiddleware.js";
 import "./profileStyle.sass";
 import { useDispatch } from "react-redux";
 
 export function Profile({ chatId, listChat, chatName }) {
   const dispatch = useDispatch();
-  const handleClick = () => dispatch(deleteChat(chatId));
+  const handleClick = () => dispatch(deleteChatThunk(chatId));
   return (
     <div className="profileDiv">
       <div className="profileHeader">
@@ -25,7 +25,7 @@ export function Profile({ chatId, listChat, chatName }) {
         </p>
         <p>
           <b>Возраст: </b>
-          {listChat.find((item) => item.id == chatId).age}
+          {Object.values(listChat).find((item) => item.id == chatId).age}
         </p>
         <button onClick={handleClick}>Удалить</button>
       </div>

@@ -1,10 +1,11 @@
 // AddUser.jsx
 import React, { useState } from "react";
+import { addChatThunk } from "../../middlewares/chatMiddleware.js";
 import { addChat } from "../../actions/chatActions.js";
 import "./addUserDivStyle.sass";
 import { useDispatch } from "react-redux";
 
-export function AddUser({ onCanselAddUser}) {
+export function AddUser({ onCanselAddUser }) {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ export function AddUser({ onCanselAddUser}) {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    dispatch(addChat(name, age));
+    dispatch(addChatThunk(null, name, age));
     onCanselAddUser();
   };
 

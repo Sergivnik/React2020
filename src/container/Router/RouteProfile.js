@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 export function RouteProfile() {
   const chats = useSelector(({ chatReducer }) => chatReducer.chats);
   const { chatId } = useParams();
-  if (chats.find((item) => item.id == chatId)) {
+  if (Object.values(chats).find((item) => item.id == chatId)) {
     return <App chatId={chatId} showProfile={true}></App>;
   } else return <Redirect to={"/chat/1/"} />;
 }

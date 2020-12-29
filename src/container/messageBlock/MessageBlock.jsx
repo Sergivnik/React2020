@@ -4,7 +4,6 @@ import "./messageBlock.sass";
 import { sendMessageThunk } from "../../middlewares/messageMiddleware";
 import { useSelector, useDispatch } from "react-redux";
 
-
 export function MessageBlock({ chatId }) {
   const chats = useSelector(({ chatReducer }) => chatReducer.chats);
   const qiote = useSelector(({ chatReducer }) => chatReducer.qiote);
@@ -14,7 +13,9 @@ export function MessageBlock({ chatId }) {
   const [text, setText] = useState("");
   let chatName;
   if (chatId) {
-    chatName = chats.find((item) => item.id == chatId).nameId;
+    chatName =
+      chats[Object.keys(chats).find((keyItem) => chats[keyItem].id == chatId)]
+        .nameId;
   } else {
     chatName = "";
   }
@@ -23,10 +24,7 @@ export function MessageBlock({ chatId }) {
   const onSubmit = (event) => {
     event.preventDefault();
     setText("");
-    let id;
-    if (messages.length) {
-      id = messages[messages.length - 1].id + 1;
-    } else id = 1;
+    
     dispatch(sendMessageThunk(null, text, chatName, chatId));
     dispatch(changeMessage(null, "", "qiote"));
   };

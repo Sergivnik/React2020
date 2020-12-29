@@ -1,4 +1,3 @@
-import axios from "axios";
 import { db } from "../services/firebase.js";
 
 export const GET_DATA = "DATA::GET_DATA";
@@ -30,10 +29,5 @@ export const getData = () => {
     } catch (error) {
       dispatch(getDataFailure());
     }
-
-    // axios
-    //   .get("http://localhost:5000/API/data")
-    //   .then((res) => dispatch(getDataSuccess(res.data)))
-    //   .catch(() => dispatch(getDataFailure()));
   };
 };

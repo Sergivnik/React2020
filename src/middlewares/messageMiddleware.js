@@ -45,7 +45,6 @@ export const changeMessageThunk = (messageId, text, typeOfChange) => {
       dispatch(changeMessage(messageId, text, typeOfChange));
     }
     if (typeOfChange == "edit") {
-      //const findMessage = db.ref("messages/" + messageId);
       let updates = {};
       updates["messages/" + messageId + "/content"] = text;
       db.ref().update(updates);

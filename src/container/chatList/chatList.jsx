@@ -33,25 +33,30 @@ export function ChatList({ onClickAdd }) {
   return (
     <div className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
-        {chats.map((item) => (
+        {Object.keys(chats).map((keyItem) => (
           <div
-            key={item.id}
+            key={keyItem}
             className={
-              fire.fire && item.id == fire.id ? "LinkBtn fire" : "LinkBtn"
+              fire.fire && chats[keyItem].id == fire.id
+                ? "LinkBtn fire"
+                : "LinkBtn"
             }
           >
-            <ListItem button onClick={() => handleNavigate(`/chat/${item.id}`)}>
+            <ListItem
+              button
+              onClick={() => handleNavigate(`/chat/${chats[keyItem].id}`)}
+            >
               <ListItemIcon>
                 <SendIcon />
               </ListItemIcon>
-              <ListItemText primary={item.nameId} />
+              <ListItemText primary={chats[keyItem].nameId} />
             </ListItem>
-              <button
-                className={"btnProfile"}
-                onClick={() => handleNavigate(`/profile/${item.id}`)}
-              >
-                {item.nameId[0]}
-              </button>
+            <button
+              className={"btnProfile"}
+              onClick={() => handleNavigate(`/profile/${chats[keyItem].id}`)}
+            >
+              {chats[keyItem].nameId[0]}
+            </button>
           </div>
         ))}
       </List>

@@ -1,18 +1,36 @@
 {
-  "chats": [
-    { "id": 1, "nameId": "ФедорРРР", "age": 54 },
-    { "id": 2, "nameId": "Петро", "age": 82 },
-    { "id": 3, "nameId": "Оксана", "age": 18 },
-    { "id": 4, "nameId": "Вальдемар", "age": 27 },
-    { "id": 5, "nameId": "Оксана", "age": 18 }
-  ],
+  "chats": {
+    "-MPj1-7udsIAXZWh5woq": {
+      "age": 54,
+      "id": "-MPj1-7udsIAXZWh5woq",
+      "nameId": "ФедорРРР"
+    },
+    "-MPj58ZLySSs7g1EK-Dw": {
+      "age": "38",
+      "id": "-MPj58ZLySSs7g1EK-Dw",
+      "nameId": "Петро"
+    },
+    "-MPjOHXDWRemVGoYlgkT": {
+      "age": "18",
+      "id": "-MPjOHXDWRemVGoYlgkT",
+      "nameId": "Оксана"
+    },
+    "-MPjS9vQm2a4g-ETdCJV": {
+      "age": "84",
+      "id": "-MPjS9vQm2a4g-ETdCJV",
+      "nameId": "Вальдемар"
+    }
+  },
   "messages": {
-    "-MPhIRIQGjR_M75gHm-2": { "name": "Robot", "content": "Привеет", "chatNumber": 1 },
+    "-MPhIRIQGjR_M75gHm-2": {
+      "chatNumber": "-MPj1-7udsIAXZWh5woq",
+      "content": "Привеет",
+      "name": "Robot"
+    },
     "-MPhIRY6928sAFArSD7p": {
-      "name": "Robot",
+      "chatNumber": "-MPj1-7udsIAXZWh5woq",
       "content": "Как поживаешь?",
-
-      "chatNumber": 1
+      "name": "Robot"
     }
   }
 }

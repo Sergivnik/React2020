@@ -7,7 +7,6 @@ export function MessageList({ messagesList, onDelMessage, chatId }) {
   useEffect(() => {
     myRef.current.scrollTop = myRef.current.scrollHeight;
   });
-  console.log(messagesList);
   return (
     <div ref={myRef} className="messageListDiv">
       {Object.keys(messagesList).map(

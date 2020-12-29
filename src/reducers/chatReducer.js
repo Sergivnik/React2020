@@ -11,7 +11,7 @@ import {
 } from "../middlewares/getDataInitial.js";
 
 const initialStore = {
-  chats: [],
+  chats: {},
   messages: {},
   qiote: "",
   fire: { fire: false, id: null },
@@ -28,7 +28,11 @@ export default function chatReducer(store = initialStore, action) {
       return update(store, {
         chats: {
           $merge: {
-            [id - 1]: { id: id, nameId: action.name, age: action.age },
+            [action.chatKey]: {
+              id: action.chatKey,
+              nameId: action.name,
+              age: action.age,
+            },
           },
         },
       });
@@ -84,12 +88,22 @@ export default function chatReducer(store = initialStore, action) {
       }
     }
     case DELETE_CHAT: {
-      let arrChat, arrMessage;
-      arrMessage = store.messages.filter(
-        (item) => item.chatNumber != action.id
-      );
-      arrChat = store.chats.filter((item) => item.id != action.id);
-      return { ...store, messages: [...arrMessage], chats: [...arrChat] };
+      let arrChat = {},
+        arrMessage = {};
+      Object.keys(store.messages).forEach((element) => {
+        if (store.messages[element].chatNumber != action.id) {
+          arrMessage[element] = store.messages[element];
+        }
+      });
+      Object.keys(store.chats).forEach((element) => {
+        if (store.chats[element].id != action.id) {
+          arrChat[element] = store.chats[element];
+        }
+      });
+      return update(store, {
+        messages: { $set: arrMessage },
+        chats: { $set: arrChat },
+      });
     }
     case GET_DATA_SUCCESS: {
       return {
