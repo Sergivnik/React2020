@@ -15,8 +15,6 @@ export const deleteChatThunk = (chatKey) => {
   return (dispatch) => {
     const findChat = db.ref("chats/" + chatKey);
     findChat.remove();
-    const filterMessages = db.ref("messages/").child("chatNumber" + chatKey);
-    filterMessages.remove();
     dispatch(deleteChat(chatKey));
   };
 };

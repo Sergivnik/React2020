@@ -9,6 +9,7 @@ import {
   GET_DATA_REQUEST,
   GET_DATA_FAILURE,
 } from "../middlewares/getDataInitial.js";
+import { db } from "../services/firebase.js";
 
 const initialStore = {
   chats: {},
@@ -90,9 +91,13 @@ export default function chatReducer(store = initialStore, action) {
     case DELETE_CHAT: {
       let arrChat = {},
         arrMessage = {};
+        
       Object.keys(store.messages).forEach((element) => {
         if (store.messages[element].chatNumber != action.id) {
           arrMessage[element] = store.messages[element];
+        }else{
+          const findMessage = db.ref("messages/" + element);
+          findMessage.remove();
         }
       });
       Object.keys(store.chats).forEach((element) => {
