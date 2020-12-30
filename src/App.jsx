@@ -16,7 +16,6 @@ export function App({ chatId, showProfile }) {
   const messages = useSelector(({ chatReducer }) => chatReducer.messages);
   const dispatch = useDispatch();
   const [showAddFormState, setShowAddFormState] = useState(false);
-  const [sign, setSign] = useState(true);
 
   useEffect(() => {
     dispatch(getData());
@@ -24,8 +23,7 @@ export function App({ chatId, showProfile }) {
 
   const chatName = useMemo(() => {
     if (chatId) {
-      return Object.values(chats).find((item) => item.id == chatId)
-        .nameId;
+      return Object.values(chats).find((item) => item.id == chatId).nameId;
     } else return "";
   }, [chatId]);
 
@@ -33,12 +31,6 @@ export function App({ chatId, showProfile }) {
     setShowAddFormState(!showAddFormState);
   }, [showAddFormState]);
 
-  const handleGetSign = (sing) => {
-    setSign(sing);
-  };
-
-  if (sign === false) return <Login getSign={handleGetSign} />;
-  else
     return (
       <div className="layer">
         <Header chatName={chatName} />
